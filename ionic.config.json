@@ -1,0 +1,7 @@
+{
+  "name": "Story Planner",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
