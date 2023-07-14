@@ -5,14 +5,20 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  public appPages = [
-    { title: 'Inbox', url: '/folder/inbox', icon: 'mail' },
-    { title: 'Outbox', url: '/folder/outbox', icon: 'paper-plane' },
-    { title: 'Favorites', url: '/folder/favorites', icon: 'heart' },
-    { title: 'Archived', url: '/folder/archived', icon: 'archive' },
-    { title: 'Trash', url: '/folder/trash', icon: 'trash' },
-    { title: 'Spam', url: '/folder/spam', icon: 'warning' },
+  public createItems = [
+    { title: 'Nueva serie', url: '/folder/inbox', icon: 'layers' },
+    { title: 'Nueva historia', url: '/story', icon: 'create' },
+    { title: 'Nuevo capítulo', url: '/folder/favorites', icon: 'reader' },
+    { title: 'Nueva escena', url: '/folder/archived', icon: 'film' },
+    { title: 'Nuevo personaje', url: '/folder/trash', icon: 'person' },
+    { title: 'Nuevo lugar', url: '/folder/spam', icon: 'image' },
+    { title: 'Nuevo objeto', url: '/folder/spam', icon: 'cube' },
+    { title: 'Nuevo mundo', url: '/folder/spam', icon: 'planet' }
   ];
-  public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+  public generalItems = [
+    { title: 'Inicio', url: '/home', icon: 'home' },
+    { title: 'Evolución', url: '/folder/outbox', icon: 'swap-horizontal' },
+    { title: 'Biblioteca', url: '/folder/favorites', icon: 'archive' }
+  ]
   constructor() {}
 }
