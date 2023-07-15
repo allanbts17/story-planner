@@ -3,8 +3,10 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
+import { TabsComponent } from './tabs/tabs.component';
+import { ResourceListComponent } from './resource-list/resource-list.component';
 
-const components = [ HeaderComponent ]
+const components = [ HeaderComponent, TabsComponent, ResourceListComponent ]
 
 @NgModule({
   declarations: [components],

@@ -15,7 +15,7 @@
           <ion-note>Planificador de historias</ion-note>
 
           <ion-menu-toggle auto-hide="false" *ngFor="let p of generalItems; let i = index">
-            <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+            <ion-item (click)="nav.navigate(p.url)" lines="none" detail="false" button>
               <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
               <ion-label>{{ p.title }}</ion-label>
             </ion-item>
@@ -25,7 +25,7 @@
         <ion-list id="labels-list">
           <ion-list-header>Crear</ion-list-header>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of createItems" >
-          <ion-item lines="none" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+          <ion-item lines="none" (click)="nav.navigate(p.url)" lines="none" detail="false" button="">
             <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
             <ion-label>{{ p.title }}</ion-label>
           </ion-item>

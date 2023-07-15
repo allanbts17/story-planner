@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { NavigateService } from './services/navigate.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   public createItems = [
     { title: 'Nueva serie', url: '/folder/inbox', icon: 'layers' },
-    { title: 'Nueva historia', url: '/story', icon: 'create' },
+    { title: 'Nueva historia', url: 'story', icon: 'create' },
     { title: 'Nuevo capítulo', url: '/folder/favorites', icon: 'reader' },
     { title: 'Nueva escena', url: '/folder/archived', icon: 'film' },
     { title: 'Nuevo personaje', url: '/folder/trash', icon: 'person' },
@@ -20,5 +21,11 @@ export class AppComponent {
     { title: 'Evolución', url: '/folder/outbox', icon: 'swap-horizontal' },
     { title: 'Biblioteca', url: '/folder/favorites', icon: 'archive' }
   ]
-  constructor() {}
+  constructor(protected nav: NavigateService) {}
+
+  ngOnInit(): void {
+    this.nav.navigate('home')
+  }
+
+
 }

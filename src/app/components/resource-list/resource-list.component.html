@@ -1,0 +1,14 @@
+<ion-list>
+  <ion-item *ngFor="let res of list"  button>
+    <ion-avatar slot="start">
+      <img [src]="res?.image || '/src/assets/placeholder.jpg'" />
+      <!-- <img src="/src/assets/placeholder.jpg" > -->
+    </ion-avatar>
+    <ion-label>
+      <h3>{{res.title}}</h3>
+      <p>{{res.subtitle}}</p>
+    </ion-label>
+  </ion-item>
+</ion-list>
+
+

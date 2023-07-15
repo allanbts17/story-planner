@@ -1,9 +1,15 @@
 <app-header title="Inicio"></app-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">home</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <app-tabs [items]="tabList" (selectedEvent)="tabSelected($event)"></app-tabs>
+  <app-resource-list *ngIf="selectedTab" [resourceType]="selectedTab" [resourceList]="dataList"></app-resource-list>
+  <!-- <ion-item button>
+    <ion-avatar slot="start">
+      <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAAAAACH5BAAAAAAALAAAAAABAAEAAAICTAEAOw==" />
+    </ion-avatar>
+    <ion-label>
+      <h3>H3 Title Text</h3>
+      <p>Icon on right</p>
+    </ion-label>
+  </ion-item> -->
 </ion-content>
