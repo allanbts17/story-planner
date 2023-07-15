@@ -9,6 +9,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { Collections } from 'src/app/shared/enums/collections';
 import { DataPaths } from 'src/app/shared/enums/data-paths';
+import { Series } from 'src/app/shared/interfaces/series';
 import { Story } from 'src/app/shared/interfaces/story';
 
 
@@ -18,69 +19,36 @@ import { Story } from 'src/app/shared/interfaces/story';
   styleUrls: ['./story.page.scss'],
 })
 export class StoryPage implements OnInit {
-  @ViewChild('imageContainer') imageContainer!: ElementRef;
+  //@ViewChild('imageContainer') imageContainer!: ElementRef;
   formGroup = new FormGroup({
     title: new FormControl('', Validators.required),
-    series: new FormControl(''),
+    series: new FormControl(),
     genre: new FormControl(<string[]>[], this.haveGenre()),
     auxGenre: new FormControl(''),
     synopsis: new FormControl('', Validators.required)
   })
   genreList: string[] = []
-  imageData!: any | string | ArrayBuffer | null;
-  isApp: boolean
+  imageData!: string | ArrayBuffer | null | undefined;
+  seriesList!: Series[]
+  
   constructor(private store: FirestoreService,
     private modal: ModalService,
     private nav: NavigateService,
-    private platform: Platform,
     private storage: StorageService,
     private utils: UtilsService
   ) {
 
-    if (this.platform.is('mobileweb')) {
-      this.isApp = false;
-
-    } else {
-      this.isApp = true;
-    }
+   
   }
 
-  ngOnInit() {
-    setTimeout(() => {
-      this.pasteImage()
-    }, 200)
-  }
-
-  pasteImage() {
-    let imageArea = document.getElementById("story-image-copy-area")
-    if (imageArea) {
-      imageArea.addEventListener('paste', (event: ClipboardEvent) => {
-        const items = event.clipboardData?.items;
-
-        if (items) {
-          for (let i = 0; i < items.length; i++) {
-            const item = items[i];
-            if (item.type.indexOf('image') !== -1) {
-              const blob = item.getAsFile();
-              console.log(blob?.name);
-              //console.log( blob?.type);
-              const reader = new FileReader();
-              reader.onload = (event: ProgressEvent<FileReader>) => {
-                this.imageData = event.target?.result;
-                console.log(this.imageData);
-              };
-              reader.readAsDataURL(<any>blob);
-            }
-          }
-        }
-      });
-      document.execCommand('paste');
-    } else {
-      setTimeout(() => {
-        this.pasteImage()
-      }, 200)
-    }
-
+  async ngOnInit() {
+    this.seriesList = (await this.store.getAllDocuments(Collections.SERIES)) || []
+    this.seriesList.push({
+      id: '0',
+      title: 'Sin serie',
+      synopsis: '',
+      image: null
+    })
   }
 
   // Añadir imagen, opcional
@@ -101,23 +69,29 @@ export class StoryPage implements OnInit {
 
   }
 
+  getSeries(){
+    let id: string = this.formGroup.controls.series.value
+    let serie: Series = <Series>this.seriesList.find(sre => sre.id == id)
+    return serie.id == '0'? null:serie
+  }
+
   async saveStory() {
     await this.modal.showLoading()
     try {
       let imageUrl = null
       if (this.imageData)
-        imageUrl = await this.storage.uploadBase64(this.imageData, DataPaths.STORY_IMAGES, this.utils.makeId(10), 'png')
+        imageUrl = await this.storage.uploadBase64(<string>this.imageData, DataPaths.STORY_IMAGES, this.utils.makeId(10), 'png')
       const story: Story = {
         title: <string>this.formGroup.controls.title.value,
-        series: <string>(this.formGroup.controls.series.value || ""),
+        series: this.getSeries(),
         image: imageUrl,
         genre: this.genreList,
-        sipnopsis: <string>this.formGroup.controls.synopsis.value,
+        synopsis: <string>this.formGroup.controls.synopsis.value,
         //   title: <string>this.formGroup.controls.title.value,
       }
 
       await this.store.addDocument(Collections.STORY, story)
-      this.nav.navigate('home')
+      this.nav.navigate('home',{ tabId: 'story'})
     } catch (err) {
       console.log(err);
     }

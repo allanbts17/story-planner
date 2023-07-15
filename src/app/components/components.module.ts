@@ -5,8 +5,9 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { TabsComponent } from './tabs/tabs.component';
 import { ResourceListComponent } from './resource-list/resource-list.component';
+import { ImagePasteAreaComponent } from './image-paste-area/image-paste-area.component';
 
-const components = [ HeaderComponent, TabsComponent, ResourceListComponent ]
+const components = [ HeaderComponent, TabsComponent, ResourceListComponent, ImagePasteAreaComponent ]
 
 @NgModule({
   declarations: [components],

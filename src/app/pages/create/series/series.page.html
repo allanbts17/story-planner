@@ -1,0 +1,19 @@
+<app-header title="Nueva serie"></app-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="formGroup" (ngSubmit)="saveSerie()" class="px-3 pt-4">
+    <app-image-paste-area [(imageData)]="imageData"></app-image-paste-area>
+    <br />
+    <ion-input formControlName="title" label="Título" label-placement="floating"
+      fill="outline"></ion-input>
+      <br />
+      <ion-textarea formControlName="synopsis" label="Sinopsis"
+        labelPlacement="floating" fill="outline"></ion-textarea>
+    <ion-row class="mt-4">
+      <ion-col>
+        <ion-button type="submit" expand="block" [disabled]="!formGroup.valid">Guardar</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+
+</ion-content>

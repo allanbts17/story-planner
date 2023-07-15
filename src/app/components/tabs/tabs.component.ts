@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SegmentChangeEventDetail, SegmentCustomEvent } from '@ionic/angular';
-import { TabData } from 'src/app/interfaces/tab-data';
+import { NavigateService } from 'src/app/services/navigate.service';
+import { TabData } from 'src/app/shared/interfaces/tab-data';
 
 @Component({
   selector: 'app-tabs',
@@ -9,16 +10,22 @@ import { TabData } from 'src/app/interfaces/tab-data';
 })
 export class TabsComponent  implements OnInit {
   @Input() items!: TabData[]
-  @Output() selectedEvent = new EventEmitter<string>
+  @Output() selectedEvent = new EventEmitter<TabData>
+  defaultItem!: string
+  constructor(private nav: NavigateService) { 
+    
+  }
 
-  constructor() { }
-
-  ngOnInit() {}
+  ngOnInit() {
+    this.defaultItem = this.nav.getParamById('tabId') ||  this.items[0].id
+    this.selectedEvent.emit(<TabData>this.items.find(item => item.id == this.defaultItem))
+  }
 
   onSelect(ev: any){
-    
-    console.log(ev?.detail?.value);
-    this.selectedEvent.emit(<string>ev?.detail.value)
+    let tabId = ev?.detail?.value
+    console.log(tabId);
+
+    this.selectedEvent.emit(<TabData>this.items.find(item => item.id == tabId))
   }
 
 }

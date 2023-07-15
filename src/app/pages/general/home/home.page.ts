@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { TabData } from 'src/app/interfaces/tab-data';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { TabData } from 'src/app/shared/interfaces/tab-data';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { Resources } from 'src/app/shared/classes/resourceData';
 import { ResourceInterfaces } from 'src/app/shared/classes/types';
 import { Collections } from 'src/app/shared/enums/collections';
+import { ResourceListComponent } from 'src/app/components/resource-list/resource-list.component';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,7 @@ import { Collections } from 'src/app/shared/enums/collections';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+  @ViewChild(ResourceListComponent) resourceList!: ResourceListComponent
   tabList: TabData[] = Resources
   selectedTab!: string
   dataList!: ResourceInterfaces[]
@@ -21,16 +23,13 @@ export class HomePage implements OnInit {
   ngOnInit() {
   }
 
-  async tabSelected(tab: string){
-    this.modal.showLoading()
-    if(tab == 'story'){
-      this.dataList = <ResourceInterfaces[]><unknown>(await this.store.getAllDocuments(Collections.STORY))
-    }
-
+  async tabSelected(tab: TabData){
+    await this.modal.showLoading()
+    this.dataList = <ResourceInterfaces[]><unknown>(await this.store.getAllDocuments(tab.collection))
     console.log('dataList',this.dataList);
-
-    this.selectedTab = tab
-    this.modal.stopLoading()
+    this.selectedTab = tab.id
+    this.resourceList.setResourceList(this.dataList,tab.id)
+    await this.modal.stopLoading()
   }
 
 }

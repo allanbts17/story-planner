@@ -18,6 +18,10 @@ const routes: Routes = [
   {
     path: 'story/:id',
     loadChildren: () => import('./pages/create/story/story.module').then( m => m.StoryPageModule)
+  },
+  {
+    path: 'series/:id',
+    loadChildren: () => import('./pages/create/series/series.module').then( m => m.SeriesPageModule)
   }
 ];
 

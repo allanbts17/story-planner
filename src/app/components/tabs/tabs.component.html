@@ -1,4 +1,4 @@
-<ion-segment [scrollable]="true" value="default" (ionChange)="onSelect($event)">
+<ion-segment [scrollable]="true" value="default" (ionChange)="onSelect($event)" [value]="defaultItem">
   <ion-segment-button *ngFor="let item of items" [value]="item.id">
     <ion-label>{{item.name}}</ion-label>
   </ion-segment-button>

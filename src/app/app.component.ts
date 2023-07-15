@@ -7,19 +7,19 @@ import { NavigateService } from './services/navigate.service';
 })
 export class AppComponent implements OnInit {
   public createItems = [
-    { title: 'Nueva serie', url: '/folder/inbox', icon: 'layers' },
+    { title: 'Nueva serie', url: 'series', icon: 'layers' },
     { title: 'Nueva historia', url: 'story', icon: 'create' },
-    { title: 'Nuevo capítulo', url: '/folder/favorites', icon: 'reader' },
-    { title: 'Nueva escena', url: '/folder/archived', icon: 'film' },
-    { title: 'Nuevo personaje', url: '/folder/trash', icon: 'person' },
-    { title: 'Nuevo lugar', url: '/folder/spam', icon: 'image' },
-    { title: 'Nuevo objeto', url: '/folder/spam', icon: 'cube' },
-    { title: 'Nuevo mundo', url: '/folder/spam', icon: 'planet' }
+    { title: 'Nuevo capítulo', url: 'chapter', icon: 'reader' },
+    { title: 'Nueva escena', url: 'scene', icon: 'film' },
+    { title: 'Nuevo personaje', url: 'character', icon: 'person' },
+    { title: 'Nuevo lugar', url: 'place', icon: 'image' },
+    { title: 'Nuevo objeto', url: 'object', icon: 'cube' },
+    { title: 'Nuevo mundo', url: 'world', icon: 'planet' }
   ];
   public generalItems = [
-    { title: 'Inicio', url: '/home', icon: 'home' },
-    { title: 'Evolución', url: '/folder/outbox', icon: 'swap-horizontal' },
-    { title: 'Biblioteca', url: '/folder/favorites', icon: 'archive' }
+    { title: 'Inicio', url: 'home', icon: 'home' },
+    { title: 'Evolución', url: 'evolution', icon: 'swap-horizontal' },
+    { title: 'Glosario', url: 'glosary', icon: 'archive' }
   ]
   constructor(protected nav: NavigateService) {}
 

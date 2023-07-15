@@ -1,0 +1,36 @@
+input:focus#story-image-copy-area { 
+  outline: none !important;
+}
+
+input#story-image-copy-area { 
+  // outline: none !important;
+  caret-color: transparent;
+}
+
+input#story-image-copy-area::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  // padding-left: 50px;
+  text-align: center;
+  opacity: 1;
+}
+
+input#story-image-copy-area:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  padding-left: 20px;
+}
+
+input#story-image-copy-area::-ms-input-placeholder {
+  /* Microsoft Edge */
+  padding-left: 20px;
+}
+
+.circle {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 16px;
+  height: 16px;
+  background-color: #b7dff8;
+  color: #001d30;
+  border-radius: 50%;
+}

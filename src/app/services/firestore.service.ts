@@ -10,13 +10,12 @@ import { firstValueFrom } from 'rxjs';
 export class FirestoreService {
   constructor(private afs: AngularFirestore) { }
 
-  async addDocument(path: CollectionTypes, data: ResourceInterfaces): Promise<DocumentReference<unknown>|undefined> {
+  async addDocument(path: CollectionTypes, data: ResourceInterfaces): Promise<void> {
     try {
-      let ref = await this.afs.collection(path).add(data)
-      return ref
+      data['id'] = this.afs.createId()
+      let ref = await this.afs.collection(path).doc(data.id).set(data)
     } catch(error){
       console.log('Firestore error:',error);
-      return undefined
     } 
   }
 

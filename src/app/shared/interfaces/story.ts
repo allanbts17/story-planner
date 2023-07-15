@@ -1,8 +1,10 @@
+import { Series } from "./series";
+
 export interface Story {
   id?: string;
   title: string;
   image: string|null;
-  series: string;
+  series: Series|null;
   genre: string[];
-  sipnopsis: string;
+  synopsis: string;
 }
