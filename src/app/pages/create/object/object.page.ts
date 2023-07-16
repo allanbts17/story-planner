@@ -7,28 +7,24 @@ import { StorageService } from 'src/app/services/storage.service';
 import { UtilsService } from 'src/app/services/utils.service';
 import { Collections } from 'src/app/shared/enums/collections';
 import { DataPaths } from 'src/app/shared/enums/data-paths';
-import { Place } from 'src/app/shared/interfaces/place';
+import { Object } from 'src/app/shared/interfaces/object';
 import { Story } from 'src/app/shared/interfaces/story';
 
 @Component({
-  selector: 'app-place',
-  templateUrl: './place.page.html',
-  styleUrls: ['./place.page.scss'],
+  selector: 'app-object',
+  templateUrl: './object.page.html',
+  styleUrls: ['./object.page.scss'],
 })
-
-export class PlacePage implements OnInit {
+export class ObjectPage implements OnInit {
   imageData!: string | ArrayBuffer | null | undefined;
   storiesList!: Story[]
 
   formGroup = new FormGroup({
     name: new FormControl('', Validators.required),
     nickname: new FormControl(''),
-    generalDescription: new FormControl('', Validators.required),
-    content: new FormControl('', Validators.required),
-    storyId: new FormControl(''),
-    view: new FormControl(''),
-    smell: new FormControl(''),
-    sound: new FormControl('')
+    description: new FormControl('', Validators.required),
+    additionalInfo: new FormControl(''),
+    storyId: new FormControl('')
   })
 
   constructor(private store: FirestoreService,
@@ -49,29 +45,24 @@ export class PlacePage implements OnInit {
     })
   }
 
-  async savePlace() {
+  async saveObject() {
     await this.modal.showLoading()
     try {
       let imageUrl = null
       if (this.imageData)
-        imageUrl = await this.storage.uploadBase64(<string>this.imageData, DataPaths.PLACE_IMAGES, this.utils.makeId(10), 'png')
+        imageUrl = await this.storage.uploadBase64(<string>this.imageData, DataPaths.OBJECT_IMAGES, this.utils.makeId(10), 'png')
       let storyId = <string>this.formGroup.controls.storyId.value
-      const place: Place = {
+      const object: Object = {
         name: <string>this.formGroup.controls.name.value,
         nickname: <string>this.formGroup.controls.nickname.value || null,
-        generalDescription: <string>this.formGroup.controls.generalDescription.value,
-        content: <string>this.formGroup.controls.content.value,
+        description: <string>this.formGroup.controls.description.value,
+        additionalInfo: <string>this.formGroup.controls.additionalInfo.value || null,
         storyId: storyId == '0' ? null:storyId,
         image: imageUrl,
-        feelAtributes: {
-          view: <string>this.formGroup.controls.view.value || null,
-          smell: <string>this.formGroup.controls.smell.value || null,
-          sound: <string>this.formGroup.controls.sound.value || null,
-        }
       }
 
-      await this.store.addDocument(Collections.PLACE, place)
-      this.nav.navigate('home', { tabId: 'place' })
+      await this.store.addDocument(Collections.OBJECT, object)
+      this.nav.navigate('home', { tabId: 'object' })
     } catch (err) {
       console.log(err);
     }

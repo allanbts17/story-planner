@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ResourceInterfaces } from 'src/app/shared/classes/types';
+import { Object } from 'src/app/shared/interfaces/object';
 import { Place } from 'src/app/shared/interfaces/place';
 import { Series } from 'src/app/shared/interfaces/series';
 import { Story } from 'src/app/shared/interfaces/story';
@@ -56,6 +57,16 @@ export class ResourceListComponent {
           image: data.image,
           title: data.name,
           subtitle: data.generalDescription
+        } as GenericResource
+      })
+    } else if (resourceType == 'object') {
+      let res: Object[] = <Object[]>resourceList
+      console.log(res);
+      this.list = res.map(data => {
+        return {
+          image: data.image,
+          title: data.name,
+          subtitle: data.description
         } as GenericResource
       })
     } else {
