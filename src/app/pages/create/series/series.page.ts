@@ -20,11 +20,29 @@ export class SeriesPage implements OnInit {
     synopsis: new FormControl('', Validators.required),
   })
   imageData!: string | ArrayBuffer | null | undefined;
+  edit = false
+  editAndImageChanged: string|null = null
+  resId!: string
+
   constructor(private store: FirestoreService,
     private modal: ModalService,
     private nav: NavigateService,
     private storage: StorageService,
-    private utils: UtilsService) { }
+    private utils: UtilsService) { 
+      this.setData()
+    }
+
+    setData() {
+      const editData: Series = this.nav.getParamById('editData')
+      if (!editData) return;
+      this.edit = true
+      this.resId = <string>editData.id;
+      this.formGroup.controls.title.setValue(editData.title)
+      this.formGroup.controls.synopsis.setValue(editData.synopsis)
+      this.imageData = editData.image
+      this.editAndImageChanged = this.imageData
+    }
+  
 
   ngOnInit() {
   }
@@ -33,14 +51,15 @@ export class SeriesPage implements OnInit {
     await this.modal.showLoading()
     try {
       let imageUrl = null
-      if (this.imageData)
+      if (this.imageData && this.editAndImageChanged != this.imageData)
         imageUrl = await this.storage.uploadBase64(<string>this.imageData, DataPaths.SERIES_IMAGES, this.utils.makeId(10), 'png')
       const series: Series = {
         title: <string>this.formGroup.controls.title.value,
         synopsis: <string>this.formGroup.controls.synopsis.value,
-        image: imageUrl,
+        image: imageUrl || this.editAndImageChanged,
       }
-      await this.store.addDocument(Collections.SERIES, series)
+      if(this.edit) series.id = this.resId
+      await this.store.setDocument(Collections.SERIES, series)
       this.nav.navigate('home',{ tabId: 'series'})
     } catch (err) {
       console.log(err);
