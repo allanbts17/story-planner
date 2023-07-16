@@ -26,7 +26,8 @@ export class HomePage implements OnInit {
   async tabSelected(tab: TabData){
     await this.modal.showLoading()
     this.dataList = <ResourceInterfaces[]><unknown>(await this.store.getAllDocuments(tab.collection))
-    console.log('dataList',this.dataList);
+    //console.log('dataList',this.dataList);
+    console.log(tab);
     this.selectedTab = tab.id
     this.resourceList.setResourceList(this.dataList,tab.id)
     await this.modal.stopLoading()

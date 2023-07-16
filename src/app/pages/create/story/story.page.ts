@@ -95,10 +95,7 @@ export class StoryPage implements OnInit {
     } catch (err) {
       console.log(err);
     }
-
-
     await this.modal.stopLoading()
-
   }
 
   haveGenre(): ValidatorFn {

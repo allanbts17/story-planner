@@ -22,6 +22,10 @@ const routes: Routes = [
   {
     path: 'series/:id',
     loadChildren: () => import('./pages/create/series/series.module').then( m => m.SeriesPageModule)
+  },
+  {
+    path: 'place/:id',
+    loadChildren: () => import('./pages/create/place/place.module').then( m => m.PlacePageModule)
   }
 ];
 

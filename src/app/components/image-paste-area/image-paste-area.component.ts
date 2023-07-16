@@ -31,8 +31,9 @@ export class ImagePasteAreaComponent implements OnInit {
     let imageArea = document.getElementById("story-image-copy-area")
     if (imageArea) {
       imageArea.addEventListener('paste', (event: ClipboardEvent) => {
+        
         const items = event.clipboardData?.items;
-
+        console.log('enter',items);
         if (items) {
           for (let i = 0; i < items.length; i++) {
             const item = items[i];

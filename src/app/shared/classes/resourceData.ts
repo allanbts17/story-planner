@@ -14,17 +14,17 @@ export const Resources = [
   {
     name: 'Personajes',
     collection: Collections.CHARACTER,
-    id: 'characters'
+    id: 'character'
   },
   {
     name: 'Lugares',
     collection: Collections.PLACE,
-    id: 'places'
+    id: 'place'
   },
   {
     name: 'Objetos',
     collection: Collections.OBJECT,
-    id: 'objects'
+    id: 'object'
   },
   
 ]
