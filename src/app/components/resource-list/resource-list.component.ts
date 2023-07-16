@@ -1,4 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FirestoreService } from 'src/app/services/firestore.service';
+import { ModalService } from 'src/app/services/modal.service';
+import { NavigateService } from 'src/app/services/navigate.service';
+import { getResourceCollectionById } from 'src/app/shared/classes/resourceData';
 import { ResourceInterfaces } from 'src/app/shared/classes/types';
 import { Object } from 'src/app/shared/interfaces/object';
 import { Place } from 'src/app/shared/interfaces/place';
@@ -10,6 +14,7 @@ type GenericResource = {
   image: string | null;
   title: string;
   subtitle: string;
+  raw: ResourceInterfaces;
 }
 
 @Component({
@@ -25,7 +30,7 @@ export class ResourceListComponent {
   // @Output() resourceTypeChange = new EventEmitter<string>()
   protected list!: GenericResource[]
   private resourceType!: string
-  constructor() { }
+  constructor(private nav: NavigateService, private store: FirestoreService, private modal: ModalService) { }
 
   setResourceList(resourceList: ResourceInterfaces[], resourceType: string) {
     this.resourceType = resourceType
@@ -36,7 +41,8 @@ export class ResourceListComponent {
         return {
           image: data.image,
           title: data.title,
-          subtitle: data.synopsis
+          subtitle: data.synopsis,
+          raw: data
         } as GenericResource
       })
     } else if (resourceType == 'series') {
@@ -46,7 +52,8 @@ export class ResourceListComponent {
         return {
           image: data.image,
           title: data.title,
-          subtitle: data.synopsis
+          subtitle: data.synopsis,
+          raw: data
         } as GenericResource
       })
     } else if (resourceType == 'place') {
@@ -56,7 +63,8 @@ export class ResourceListComponent {
         return {
           image: data.image,
           title: data.name,
-          subtitle: data.generalDescription
+          subtitle: data.generalDescription,
+          raw: data
         } as GenericResource
       })
     } else if (resourceType == 'object') {
@@ -66,7 +74,8 @@ export class ResourceListComponent {
         return {
           image: data.image,
           title: data.name,
-          subtitle: data.description
+          subtitle: data.description,
+          raw: data
         } as GenericResource
       })
     } else {
@@ -74,6 +83,21 @@ export class ResourceListComponent {
     }
   }
 
+  async deleteItem(res: ResourceInterfaces) {
+    let action = await this.modal.presentAlert('Borrar recurso', '¿Estás seguro que deseas borrar este recurso?')
+    console.log(action);
+    await this.modal.showLoading()
+    if (action){
+      await this.store.deleteDocument(getResourceCollectionById(this.resourceType), <string>res.id)
+      this.list = this.list.filter(lst => lst.raw.id != res.id)
+    }
+    await this.modal.stopLoading()
+      
+  }
+
+  editItem(res: ResourceInterfaces) {
+    this.nav.navigate(this.resourceType, { editData: res })
+  }
 
 
 }

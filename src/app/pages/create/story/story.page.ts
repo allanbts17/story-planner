@@ -30,15 +30,32 @@ export class StoryPage implements OnInit {
   genreList: string[] = []
   imageData!: string | ArrayBuffer | null | undefined;
   seriesList!: Series[]
-  
+  edit = false
+  editAndImageChanged: string|null = null
+  resId!: string
+
   constructor(private store: FirestoreService,
     private modal: ModalService,
     private nav: NavigateService,
     private storage: StorageService,
     private utils: UtilsService
   ) {
+    this.setData()
 
-   
+  }
+
+  setData() {
+    const editData: Story = this.nav.getParamById('editData')
+    if (!editData) return;
+    this.edit = true
+    this.resId = <string>editData.id;
+    this.formGroup.controls.title.setValue(editData.title)
+    this.formGroup.controls.series.setValue(editData.series?.id || '0')
+    this.formGroup.controls.genre.setValue(editData.genre)
+    this.formGroup.controls.synopsis.setValue(editData.synopsis)
+    this.imageData = editData.image
+    this.genreList = editData.genre
+    this.editAndImageChanged = this.imageData
   }
 
   async ngOnInit() {
@@ -69,29 +86,31 @@ export class StoryPage implements OnInit {
 
   }
 
-  getSeries(){
+  getSeries() {
     let id: string = this.formGroup.controls.series.value
     let serie: Series = <Series>this.seriesList.find(sre => sre.id == id)
-    return serie.id == '0'? null:serie
+    return serie.id == '0' ? null : serie
   }
 
   async saveStory() {
     await this.modal.showLoading()
     try {
       let imageUrl = null
-      if (this.imageData)
+      if (this.imageData && this.editAndImageChanged != this.imageData) {
         imageUrl = await this.storage.uploadBase64(<string>this.imageData, DataPaths.STORY_IMAGES, this.utils.makeId(10), 'png')
+      }
+
       const story: Story = {
         title: <string>this.formGroup.controls.title.value,
         series: this.getSeries(),
-        image: imageUrl,
+        image: imageUrl || this.editAndImageChanged,
         genre: this.genreList,
         synopsis: <string>this.formGroup.controls.synopsis.value,
-        //   title: <string>this.formGroup.controls.title.value,
       }
+      if(this.edit) story.id = this.resId
 
-      await this.store.addDocument(Collections.STORY, story)
-      this.nav.navigate('home',{ tabId: 'story'})
+      await this.store.setDocument(Collections.STORY, story)
+      this.nav.navigate('home', { tabId: 'story' })
     } catch (err) {
       console.log(err);
     }

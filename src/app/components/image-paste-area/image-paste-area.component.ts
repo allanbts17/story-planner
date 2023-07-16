@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Platform } from '@ionic/angular';
+import { UtilsService } from 'src/app/services/utils.service';
 
 
 @Component({
@@ -11,7 +12,9 @@ export class ImagePasteAreaComponent implements OnInit {
   @Input() imageData!: string | ArrayBuffer | null | undefined;
   @Output() imageDataChange = new EventEmitter<string | ArrayBuffer | null | undefined>();
   isApp: boolean
-  constructor(private platform: Platform) {
+  storyImageId: string
+  constructor(private platform: Platform, private utils: UtilsService) {
+    this.storyImageId = utils.makeId(10)
     if (this.platform.is('mobileweb')) {
       this.isApp = false;
       console.log('is not app');
@@ -28,7 +31,7 @@ export class ImagePasteAreaComponent implements OnInit {
   }
 
   pasteImage() {
-    let imageArea = document.getElementById("story-image-copy-area")
+    let imageArea = document.getElementById("story-image-copy-area-"+this.storyImageId)
     if (imageArea) {
       imageArea.addEventListener('paste', (event: ClipboardEvent) => {
         

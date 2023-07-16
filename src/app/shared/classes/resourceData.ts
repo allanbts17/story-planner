@@ -1,4 +1,5 @@
 import { Collections } from "../enums/collections";
+import { CollectionTypes } from "./types";
 
 export const Resources = [
   {
@@ -26,5 +27,8 @@ export const Resources = [
     collection: Collections.OBJECT,
     id: 'object'
   },
-  
 ]
+
+export const getResourceCollectionById = (id: string): CollectionTypes => {
+  return <CollectionTypes>Resources.find(res => res.id == id)?.collection
+}
