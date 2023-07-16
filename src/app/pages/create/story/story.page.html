@@ -15,7 +15,7 @@
     <br />
     <!-- <ion-input helperText="Esto no es obligatorio" formControlName="series"
       label="Serie" label-placement="floating" fill="outline"></ion-input> -->
-      <ion-select label="Serie" formControlName="series" label-placement="floating" fill="outline">
+      <ion-select helperText="Esto no es obligatorio" label="Serie" formControlName="series" label-placement="floating" fill="outline">
         <ion-select-option *ngFor="let sre of seriesList" [value]="sre.id">{{sre.title}}</ion-select-option>
         <!-- <ion-select-option value="banana">Banana</ion-select-option>
         <ion-select-option value="orange">Orange</ion-select-option> -->
