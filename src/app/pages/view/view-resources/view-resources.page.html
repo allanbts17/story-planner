@@ -1,0 +1,108 @@
+<app-header [title]="title"></app-header>
+
+<ion-content [fullscreen]="true">
+  <ng-container [ngSwitch]="resourceType">
+    <ng-container *ngSwitchCase="'story'" [ngTemplateOutlet]="storyTem"></ng-container>
+    <ng-container *ngSwitchCase="'series'" [ngTemplateOutlet]="seriesTem"></ng-container>
+    <ng-container *ngSwitchCase="'place'" [ngTemplateOutlet]="placeTem"></ng-container>
+    <ng-container *ngSwitchCase="'object'" [ngTemplateOutlet]="objectTem"></ng-container>
+  </ng-container>
+</ion-content>
+
+<ng-template #storyTem>
+  <div class="w-full flex justify-center">
+    <img *ngIf="story?.image" [src]="story.image">
+  </div>
+  <br />
+  <div class="px-2">
+    <h2 class="text-xl font-bold">{{story.title}}</h2>
+    <h2 *ngIf="story.series" class="text-sm font-semibold mb-1">{{story.series.title}}</h2>
+    <h2 class="text-md font-semibold">Sinopsis</h2>
+    <p>{{story.synopsis}}</p>
+    <br />
+
+    <p class="text-sm font-medium">Géneros</p>
+    <p>{{story.genre.join(', ')}}</p>
+    <br />
+  </div>
+</ng-template>
+
+<ng-template #seriesTem>
+  <div class="w-full flex justify-center">
+    <img *ngIf="series?.image" [src]="series.image">
+  </div>
+  <br />
+  <div class="px-2">
+    <h2 class="text-xl font-bold">{{series.title}}</h2>
+    <h2 class="text-md font-semibold">Sinopsis</h2>
+    <p>{{series.synopsis}}</p>
+    <br />
+    <div *ngIf="storiesBySeries && storiesBySeries.length > 0">
+      <p class="text-sm font-medium">Historias</p>
+      <p>{{storiesBySeries.join(', ')}}</p>
+    </div>
+    <br />
+  </div>
+</ng-template>
+
+<ng-template #placeTem>
+  <div class="w-full flex justify-center">
+    <img *ngIf="place?.image" [src]="place.image">
+  </div>
+  <br />
+  <div class="px-2">
+    <h2 class="text-xl font-bold">{{place.name}}</h2>
+    <h2 *ngIf="place.storyId" class="text-sm font-semibold mb-1">{{storyByResource}}</h2>
+    <h2 class="text-md font-semibold">Descripción general</h2>
+    <p>{{place.generalDescription}}</p>
+    <br />
+
+    <div *ngIf="place.nickname">
+      <h2 class="text-md font-semibold">Apodo</h2>
+      <p>{{place.nickname}}</p>
+    </div>
+    <br />
+
+    <h2 class="text-md font-semibold">Contenido</h2>
+    <p>{{place.content}}</p>
+    <br />
+
+    <div
+      *ngIf="place.feelAtributes.smell && place.feelAtributes.view && place.feelAtributes.sound">
+      <h2 class="text-md font-bold mb-1">Sentidos</h2>
+      <h2 class="text-md font-medium">Vista</h2>
+      <p>{{place.feelAtributes.view}}</p>
+      <h2 class="text-md font-medium">Olor</h2>
+      <p>{{place.feelAtributes.smell}}</p>
+      <h2 class="text-md font-medium">Sonido</h2>
+      <p>{{place.feelAtributes.sound}}</p>
+    </div>
+    <br />
+  </div>
+</ng-template>
+
+<ng-template #objectTem>
+  <div class="w-full flex justify-center">
+    <img *ngIf="object?.image" [src]="object.image">
+  </div>
+  <br />
+  <div class="px-2">
+    <h2 class="text-xl font-bold">{{object.name}}</h2>
+    <h2 *ngIf="object.storyId" class="text-sm font-semibold mb-1">{{storyByResource}}</h2>
+    <h2 class="text-md font-semibold">Descripción</h2>
+    <p>{{object.description}}</p>
+    <br />
+
+    <div *ngIf="object.nickname">
+      <h2 class="text-md font-semibold">Apodo</h2>
+      <p>{{object.nickname}}</p>
+    </div>
+    <br />
+
+    <div *ngIf="object.additionalInfo">
+      <h2 class="text-md font-semibold">Información adicional</h2>
+      <p>{{object.additionalInfo}}</p>
+    </div>
+    <br />
+  </div>
+</ng-template>

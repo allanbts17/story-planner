@@ -30,6 +30,10 @@ const routes: Routes = [
   {
     path: 'object/:id',
     loadChildren: () => import('./pages/create/object/object.module').then( m => m.ObjectPageModule)
+  },
+  {
+    path: 'view-resources/:id',
+    loadChildren: () => import('./pages/view/view-resources/view-resources.module').then( m => m.ViewResourcesPageModule)
   }
 ];
 

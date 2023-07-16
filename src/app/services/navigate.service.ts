@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Params, Route, Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +21,18 @@ export class NavigateService {
 
   getAllParam() {
     return this.router.getCurrentNavigation()?.extras.state;
+  }
+
+  // getUrlParams(): Promise<Params>{
+  //   let obs$ = this.route.params
+  //   return firstValueFrom(obs$)
+  // }
+
+  getUrlParams(){
+  this.route.params.subscribe(data => {
+    console.log(data);
+  })
+
   }
 
 

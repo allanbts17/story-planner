@@ -99,5 +99,9 @@ export class ResourceListComponent {
     this.nav.navigate(this.resourceType, { editData: res })
   }
 
+  viewItem(res: ResourceInterfaces){
+    this.nav.navigate('view-resources',{ resourceType: this.resourceType, resource: res })
+  }
+
 
 }

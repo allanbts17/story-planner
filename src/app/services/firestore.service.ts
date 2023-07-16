@@ -3,6 +3,8 @@ import { AngularFirestore, DocumentReference } from '@angular/fire/compat/firest
 import { Firestore, addDoc, collection, collectionData } from '@angular/fire/firestore';
 import { CollectionTypes, ResourceInterfaces } from '../shared/classes/types';
 import { firstValueFrom } from 'rxjs';
+import { Collections } from '../shared/enums/collections';
+import { Story } from '../shared/interfaces/story';
 
 @Injectable({
   providedIn: 'root'
@@ -42,7 +44,23 @@ export class FirestoreService {
     }
   }
 
+  async getDocument(path: CollectionTypes, id: string) {
+    try {
+      let obs$ = this.afs.collection(path).doc(id).get()
+      let data = await firstValueFrom(obs$)
+      return { id: data.id, ...<any>data.data() }
+    } catch (error) {
+      console.log('Firestore error:', error);
+      return undefined
+    }
+  }
+
   async deleteDocument(path: CollectionTypes, id: string){
     await this.afs.collection(path).doc(id).delete() 
+  }
+
+  async getStoriesBySeries(serieId: string): Promise<Story[]>{
+    let stories: Story[] = <Story[]>(await this.getAllDocuments(Collections.STORY))
+    return stories?.filter(story => story.series?.id == serieId)
   }
 }

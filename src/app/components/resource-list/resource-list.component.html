@@ -1,6 +1,6 @@
 <ion-list *ngIf="list?.length != 0 && list">
   <ion-item-sliding *ngFor="let res of list"  >
-  <ion-item button>
+  <ion-item (click)="viewItem(res.raw)" button>
     <!-- <ion-avatar slot="start"> -->
       <ion-img slot="start" class="w-16 h-16" [src]="res?.image || 'assets/placeholder.jpg'"></ion-img>
       <!-- <img src="/src/assets/placeholder.jpg" > -->
@@ -20,6 +20,6 @@
 
 
 
-<p *ngIf="list?.length == 0 || !list" class="w-full text-center text-lg font-bold mt-3">No hay recursos</p>
+<p *ngIf="list?.length == 0" class="w-full text-center text-lg font-bold mt-3">No hay recursos</p>
 
 
