@@ -29,12 +29,13 @@ export class ViewResourcesPage implements OnInit {
   chapterByStory!: SelectableChapter[]
 
   showAllChapterSummaries = false
-
+  resourceToEdit: any
   constructor(private nav: NavigateService,
     private store: FirestoreService,
     private modal: ModalService) {
     this.resourceType = nav.getParamById('resourceType')
     const resourceData = nav.getParamById('resource')
+    this.resourceToEdit = resourceData
     this.title = 'Ver ' + getSingularName(this.resourceType)
     this.setResource(resourceData)
   }
@@ -71,6 +72,10 @@ export class ViewResourcesPage implements OnInit {
 
   getGenreText(genList: string[]) {
     return genList.join(', ')
+  }
+
+  editResource(){
+    this.nav.navigate(this.resourceType, { editData: this.resourceToEdit })
   }
 
   viewChapter(chapter: SelectableChapter) {

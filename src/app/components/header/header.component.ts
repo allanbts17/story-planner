@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NavigateService } from 'src/app/services/navigate.service';
 
 @Component({
   selector: 'app-header',
@@ -7,8 +8,20 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class HeaderComponent  implements OnInit {
   @Input() title: string = ''
-  constructor() { }
+  @Input() showEdit: boolean = false
+  @Input() showHome = true
+  @Output() editEvent = new EventEmitter<any>()
+  //@Output() homeEvent = new EventEmitter<any>()
+  constructor(private nav: NavigateService) { }
 
   ngOnInit() {}
+
+  onEdit(){
+    this.editEvent.emit()
+  }
+
+  onHome(){
+    this.nav.navigate('home')
+  }
 
 }
