@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
     { title: 'Nuevo personaje', url: 'character', icon: 'person' },
     { title: 'Nuevo lugar', url: 'place', icon: 'image' },
     { title: 'Nuevo objeto', url: 'object', icon: 'cube' },
-    { title: 'Nuevo mundo', url: 'world', icon: 'planet' }
+    //{ title: 'Nuevo mundo', url: 'world', icon: 'planet' }
   ];
   public generalItems = [
     { title: 'Inicio', url: 'home', icon: 'home' },
