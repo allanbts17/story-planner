@@ -34,6 +34,10 @@ const routes: Routes = [
   {
     path: 'view-resources/:id',
     loadChildren: () => import('./pages/view/view-resources/view-resources.module').then( m => m.ViewResourcesPageModule)
+  },
+  {
+    path: 'chapter/:id',
+    loadChildren: () => import('./pages/create/chapter/chapter.module').then( m => m.ChapterPageModule)
   }
 ];
 

@@ -21,13 +21,15 @@ export class FirestoreService {
     }
   }
 
-  async setDocument(path: CollectionTypes, data: ResourceInterfaces): Promise<void> {
+  async setDocument(path: CollectionTypes, data: ResourceInterfaces): Promise<string|null> {
     try {
       if (!data?.id)
         data['id'] = this.afs.createId()
-      let ref = await this.afs.collection(path).doc(data.id).set(data)
+      await this.afs.collection(path).doc(data.id).set(data)
+      return <string>data.id
     } catch (error) {
       console.log('Firestore error:', error);
+      return null
     }
   }
 
@@ -55,12 +57,25 @@ export class FirestoreService {
     }
   }
 
-  async deleteDocument(path: CollectionTypes, id: string){
-    await this.afs.collection(path).doc(id).delete() 
+  async deleteDocument(path: CollectionTypes, id: string) {
+    await this.afs.collection(path).doc(id).delete()
   }
 
-  async getStoriesBySeries(serieId: string): Promise<Story[]>{
+  async getStoriesBySeries(serieId: string): Promise<Story[]> {
     let stories: Story[] = <Story[]>(await this.getAllDocuments(Collections.STORY))
     return stories?.filter(story => story.series?.id == serieId)
+  }
+
+  async getChaptersByStory(storyId: string) {
+    try {
+      let obs$ = this.afs.collection(Collections.CHAPTER, ref => ref.where('storyId', '==', storyId).orderBy('order','asc')).get()
+      let data = await firstValueFrom(obs$)
+      let arr: any[] = []
+      data.forEach(d => arr.push({ id: d.id, ...<any>d.data() }))
+      return arr;
+    } catch (error) {
+      console.log('Firestore error:', error);
+      return undefined
+    }
   }
 }

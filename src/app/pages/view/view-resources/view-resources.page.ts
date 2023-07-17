@@ -5,6 +5,7 @@ import { NavigateService } from 'src/app/services/navigate.service';
 import { getSingularName } from 'src/app/shared/classes/resourceData';
 import { ResourceInterfaces } from 'src/app/shared/classes/types';
 import { Collections } from 'src/app/shared/enums/collections';
+import { Chapter, SelectableChapter } from 'src/app/shared/interfaces/chapter';
 import { Object } from 'src/app/shared/interfaces/object';
 import { Place } from 'src/app/shared/interfaces/place';
 import { Series } from 'src/app/shared/interfaces/series';
@@ -25,6 +26,10 @@ export class ViewResourcesPage implements OnInit {
 
   storiesBySeries!: string[]
   storyByResource: string = ''
+  chapterByStory!: SelectableChapter[]
+
+  showAllChapterSummaries = false
+
   constructor(private nav: NavigateService,
     private store: FirestoreService,
     private modal: ModalService) {
@@ -41,6 +46,9 @@ export class ViewResourcesPage implements OnInit {
   async setResource(res: ResourceInterfaces) {
     if (this.resourceType == 'story') {
       this.story = <Story>res
+      await this.modal.showLoading()
+      this.chapterByStory = (<SelectableChapter[]>(await this.store.getChaptersByStory(<string>res.id))).map(chp => { return { ...chp, select: false } })
+      await this.modal.stopLoading()
     } else if (this.resourceType == 'series') {
       this.series = <Series>res
       await this.modal.showLoading()
@@ -63,6 +71,26 @@ export class ViewResourcesPage implements OnInit {
 
   getGenreText(genList: string[]) {
     return genList.join(', ')
+  }
+
+  viewChapter(chapter: SelectableChapter) {
+    if (!this.showAllChapterSummaries)
+      chapter.select = !chapter.select
+  }
+
+  editChapter(chapter: Chapter) {
+    this.nav.navigate('chapter', { editData: chapter })
+  }
+
+  async deleteChapter(chapter: Chapter) {
+    let action = await this.modal.presentAlert('Borrar capítulo', '¿Estás seguro que deseas borrar este capítulo?')
+    console.log(action);
+    await this.modal.showLoading()
+    if (action) {
+      await this.store.deleteDocument(Collections.CHAPTER, <string>chapter.id)
+      this.chapterByStory = this.chapterByStory.filter(chp => chp.id != chapter.id)
+    }
+    await this.modal.stopLoading()
   }
 
 }

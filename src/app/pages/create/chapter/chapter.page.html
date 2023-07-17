@@ -1,0 +1,42 @@
+<app-header title="Nuevo capítulo"></app-header>
+
+<ion-content [fullscreen]="true">
+  <form [formGroup]="formGroup" (ngSubmit)="saveChapter()" class="px-3 pt-4">
+    <ion-input formControlName="title" label="Título" label-placement="floating"
+      fill="outline"></ion-input>
+    <br />
+
+    <ion-textarea formControlName="summary" label="Resumen"
+      label-placement="floating"
+      fill="outline"></ion-textarea>
+    <br />
+
+    <ion-select label="Historia" formControlName="storyId"
+      label-placement="floating" fill="outline" (ionChange)="storySelected($event)"> 
+      <ion-select-option *ngFor="let story of storiesList" [value]="story.id">{{story.title}}</ion-select-option>
+    </ion-select>
+    <br />
+
+    <ion-input type="number" min="0" max="999" formControlName="order" label="Orden" label-placement="floating"
+      fill="outline"></ion-input>
+
+    <ion-list *ngIf="chapterList && chapterList.length > 0">
+      <ion-list-header>
+        <ion-label>Lista de capítulos</ion-label>
+      </ion-list-header>
+      <ion-item *ngFor="let chapter of chapterList">
+        <ion-label>
+          <h3>{{'Capítulo '+chapter.order}}</h3>
+          <p>{{chapter.title}}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+
+    <ion-row class="mt-3">
+      <ion-col>
+        <ion-button type="submit" expand="block" [disabled]="!formGroup.valid">Guardar</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+
+</ion-content>

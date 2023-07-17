@@ -10,7 +10,7 @@ export class AppComponent implements OnInit {
     { title: 'Nueva serie', url: 'series', icon: 'layers' },
     { title: 'Nueva historia', url: 'story', icon: 'create' },
     { title: 'Nuevo capítulo', url: 'chapter', icon: 'reader' },
-    { title: 'Nueva escena', url: 'scene', icon: 'film' },
+    //{ title: 'Nueva escena', url: 'scene', icon: 'film' },
     { title: 'Nuevo personaje', url: 'character', icon: 'person' },
     { title: 'Nuevo lugar', url: 'place', icon: 'image' },
     { title: 'Nuevo objeto', url: 'object', icon: 'cube' },
