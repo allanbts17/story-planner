@@ -1,0 +1,3 @@
+<ion-breadcrumbs *ngIf="steps.length > 0" mode="ios">
+  <ion-breadcrumb [color]="step.passed? 'primary':''" [active]="step.active" *ngFor="let step of steps" (click)="stepSelected(step)">{{step.label}}</ion-breadcrumb>
+</ion-breadcrumbs>

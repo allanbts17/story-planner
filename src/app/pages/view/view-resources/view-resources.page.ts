@@ -74,6 +74,13 @@ export class ViewResourcesPage implements OnInit {
     return genList.join(', ')
   }
 
+  changeChapterSummaries(){
+    this.showAllChapterSummaries = !this.showAllChapterSummaries
+    if(!this.showAllChapterSummaries){
+      this.chapterByStory.forEach(chp => chp.select = false)
+    }
+  }
+  
   editResource(){
     this.nav.navigate(this.resourceType, { editData: this.resourceToEdit })
   }

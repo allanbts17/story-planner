@@ -1,0 +1,108 @@
+<app-header id="header-char" [title]="(edit? 'Editar':'Nuevo') + ' personaje'"></app-header>
+
+<ion-content>
+  <div *ngIf="step == 0">step 0 - {{step}} </div>
+  <div *ngIf="step == 1">step 1 - {{step}} </div>
+  <div id="stepper-char" class="fixed shadow-md stepper-container z-50">
+    <app-stepper-guide (stepSelectedEvent)="stepSelected($event)"
+      [stepLabels]="stepLabels"></app-stepper-guide>
+  </div>
+  <div id="stepper-back" class="w-full"></div>
+  <div *ngIf="step == 0">step 0 - {{step}} </div>
+  <div *ngIf="step == 1">step 1 - {{step}} </div>
+  <form *ngIf="step == 0" [formGroup]="characterFormGroups.basic"
+      class="px-3 pt-4">
+      holaaaa mundo
+      {{step}}
+      <app-image-paste-area [(imageData)]="imageData"></app-image-paste-area>
+      <br />
+      <ion-input formControlName="name" label="Nombre"
+        label-placement="floating"
+        fill="outline" helperText="Obligatorio"></ion-input>
+      <br />
+      <ion-input formControlName="lastname" label="Apellido"
+        label-placement="floating"
+        fill="outline" helperText="Obligatorio"></ion-input>
+      <br />
+      <ion-input formControlName="nickname" label="Apodo"
+        label-placement="floating"
+        fill="outline"></ion-input>
+      <br />
+      <ion-input formControlName="age" label="Edad" label-placement="floating"
+        fill="outline"></ion-input>
+      <br />
+      <ion-select label="Género" formControlName="gender"
+        label-placement="floating" fill="outline">
+        <ion-select-option value="Masculino">Masculino</ion-select-option>
+        <ion-select-option value="Femenino">Femenino</ion-select-option>
+      </ion-select>
+      <br />
+      <ion-input formControlName="birthdate" label="Fecha de nacimiento"
+        label-placement="floating"
+        fill="outline"></ion-input>
+      <br />
+      <ion-input formControlName="birthPlace" label="Lugar de nacimiento"
+        label-placement="floating"
+        fill="outline"></ion-input>
+      <br />
+      <ion-select label="Historia" formControlName="storyId"
+        label-placement="floating" fill="outline">
+        <ion-select-option *ngFor="let story of storiesList" [value]="story.id">{{story.title}}</ion-select-option>
+      </ion-select>
+    </form>
+
+    <form *ngIf="step == 1"  [formGroup]="formGroup"
+      class="px-3 pt-4">
+      <ion-input formControlName="height" label="Altura"
+        label-placement="floating"
+        fill="outline"></ion-input>
+      <br />
+      <ion-input formControlName="weight" label="Peso"
+        label-placement="floating"
+        fill="outline"></ion-input>
+      <br />
+      <ion-input formControlName="skin" label="Piel"
+        label-placement="floating"
+        fill="outline"></ion-input>
+      <br />
+      <ion-input formControlName="eyes" label="Ojos" label-placement="floating"
+        fill="outline"></ion-input>
+      <br />
+      <ion-input formControlName="hair" label="Cabello"
+        label-placement="floating"
+        fill="outline"></ion-input>
+      <br />
+      <ion-textarea formControlName="distinguishableTraits"
+        label="Rasgo distinguible"
+        label-placement="floating"
+        fill="outline"></ion-textarea>
+      <br />
+      <ion-input formControlName="posture" label="Postura"
+        label-placement="floating"
+        fill="outline"></ion-input>
+      <br />
+      <ion-input formControlName="otherPhysicalTrait" label="Otro rasgo físico"
+        label-placement="floating"
+        fill="outline"></ion-input>
+      <br />
+      <ion-input formControlName="outfit" label="Vestimenta"
+        label-placement="floating"
+        fill="outline"></ion-input>
+      <br />
+      <ion-textarea formControlName="accessories" label="Accesorios"
+        label-placement="floating"
+        fill="outline"></ion-textarea>
+    </form>
+
+
+
+
+  <ion-row class="mt-3">
+    <ion-col>
+      <ion-button (click)="stepperNext()" expand="block"
+        [disabled]="buttonDisabled()">Siguiente</ion-button>
+    </ion-col>
+  </ion-row>
+
+
+</ion-content>

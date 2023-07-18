@@ -38,6 +38,10 @@ const routes: Routes = [
   {
     path: 'chapter/:id',
     loadChildren: () => import('./pages/create/chapter/chapter.module').then( m => m.ChapterPageModule)
+  },
+  {
+    path: 'character/:id',
+    loadChildren: () => import('./pages/create/character/character.module').then( m => m.CharacterPageModule)
   }
 ];
 

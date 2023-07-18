@@ -27,11 +27,15 @@ export class NavigateService {
   //   let obs$ = this.route.params
   //   return firstValueFrom(obs$)
   // }
-
+  getRouter(){
+    return this.router
+  }
   getUrlParams(){
   this.route.params.subscribe(data => {
     console.log(data);
   })
+
+  
 
   }
 
