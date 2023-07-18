@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StepperGuideComponent } from 'src/app/components/stepper-guide/stepper-guide.component';
 import { FirestoreService } from 'src/app/services/firestore.service';
 import { UtilsService } from 'src/app/services/utils.service';
@@ -36,19 +36,6 @@ export class CharacterPage implements OnInit {
   ]
   step = 0
 
-  formGroup: FormGroup<any> = new FormGroup({
-    height: new FormControl(''),
-    weight: new FormControl(''),
-    skin: new FormControl(''),
-    eyes: new FormControl(''),
-    hair: new FormControl(''),
-    distinguishableTraits: new FormControl(''),
-    posture: new FormControl(''),
-    otherPhysicalTrait: new FormControl(''),
-    outfit: new FormControl(''),
-    accessories: new FormControl('')
-  })
-
   constructor(private utils: UtilsService,
     private store: FirestoreService) {
 
@@ -56,24 +43,24 @@ export class CharacterPage implements OnInit {
 
   async ngOnInit() {
 
-    // let stepper = <HTMLElement>(await this.utils.getElementById('stepper-char'))
-    // let stepperBack = <HTMLElement>(await this.utils.getElementById('stepper-back', 50, false))
+    let stepper = <HTMLElement>(await this.utils.getElementById('stepper-char'))
+    let stepperBack = <HTMLElement>(await this.utils.getElementById('stepper-back', 50, false))
 
-    // stepperBack.style.height = `${stepper.clientHeight}px`
+    stepperBack.style.height = `${stepper.clientHeight}px`
 
-    // if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    //   stepper.classList.add('dark')
-    // }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      stepper.classList.add('dark')
+    }
 
-    // window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-    //   const newColorScheme = event.matches ? "dark" : "light";
-    //   if (event.matches) {
-    //     stepper.classList.add('dark')
-    //   } else {
-    //     stepper.classList.remove('dark')
-    //   }
-    //   console.log('change', newColorScheme);
-    // });
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+      const newColorScheme = event.matches ? "dark" : "light";
+      if (event.matches) {
+        stepper.classList.add('dark')
+      } else {
+        stepper.classList.remove('dark')
+      }
+      console.log('change', newColorScheme);
+    });
     // console.log(header?.clientHeight,window.innerHeight);
 
     this.storiesList = (await this.store.getAllDocuments(Collections.STORY)) || []
@@ -87,13 +74,12 @@ export class CharacterPage implements OnInit {
     })
   }
 
-  stepSelected(_step: Step) {
-    this.step = _step.step
-    console.log('s', _step);
+  stepSelected(step: Step) {
+    this.step = step.step
+    console.log('s', step);
   }
 
   buttonDisabled(){
-    return false
     let disable = false
     if(this.step == 0 && this.characterFormGroups.basic.invalid) disable = true
     else if(this.step == 1 && this.characterFormGroups.appearance.invalid) disable = true
@@ -101,10 +87,9 @@ export class CharacterPage implements OnInit {
   }
 
   stepperNext() {
-    this.step =  this.step == 0? 1:0
-    // this.step++;
-    // this.stepper.next()
-    // console.log('step',this.step);
+    this.step++;
+    this.stepper.next()
+    console.log('step',this.step);
   }
 
   toInt(str: string){

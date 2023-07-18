@@ -17,8 +17,7 @@ export class HomePage implements OnInit {
   tabList: TabData[] = Resources
   selectedTab!: string
   dataList!: ResourceInterfaces[]
-  test = 'asd'
-  step = 0
+
   constructor(private store: FirestoreService,
     private modal: ModalService) { }
 
@@ -26,10 +25,7 @@ export class HomePage implements OnInit {
 
   }
 
-  changetest(){
-    this.test = this.test == 'asd'? 'man':'asd'
-    this.step = this.step==0? 1:0
-  }
+
 
   async tabSelected(tab: TabData){
     await this.modal.showLoading()

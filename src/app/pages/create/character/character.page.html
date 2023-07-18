@@ -1,19 +1,29 @@
 <app-header id="header-char" [title]="(edit? 'Editar':'Nuevo') + ' personaje'"></app-header>
 
 <ion-content>
-  <div *ngIf="step == 0">step 0 - {{step}} </div>
-  <div *ngIf="step == 1">step 1 - {{step}} </div>
   <div id="stepper-char" class="fixed shadow-md stepper-container z-50">
     <app-stepper-guide (stepSelectedEvent)="stepSelected($event)"
       [stepLabels]="stepLabels"></app-stepper-guide>
   </div>
   <div id="stepper-back" class="w-full"></div>
-  <div *ngIf="step == 0">step 0 - {{step}} </div>
-  <div *ngIf="step == 1">step 1 - {{step}} </div>
-  <form *ngIf="step == 0" [formGroup]="characterFormGroups.basic"
+
+  <!-- <div [ngSwitch]="step.toString()"> -->
+    <ng-container *ngIf="step == 0" [ngTemplateOutlet]="basic"></ng-container>
+    <ng-container *ngIf="step == 1" [ngTemplateOutlet]="appearance"></ng-container>
+    <!--  <ng-container *ngSwitchCase="2" [ngTemplateOutlet]="placeTem"></ng-container>
+          <ng-container *ngSwitchCase="3" [ngTemplateOutlet]="objectTem"></ng-container> -->
+    <!-- </div> -->
+
+  <ion-row class="mt-3">
+    <ion-col>
+      <ion-button (click)="stepperNext()" expand="block"
+        [disabled]="buttonDisabled()">Siguiente</ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ng-template #basic>
+    <form [formGroup]="characterFormGroups.basic"
       class="px-3 pt-4">
-      holaaaa mundo
-      {{step}}
       <app-image-paste-area [(imageData)]="imageData"></app-image-paste-area>
       <br />
       <ion-input formControlName="name" label="Nombre"
@@ -50,8 +60,10 @@
         <ion-select-option *ngFor="let story of storiesList" [value]="story.id">{{story.title}}</ion-select-option>
       </ion-select>
     </form>
+  </ng-template>
 
-    <form *ngIf="step == 1"  [formGroup]="formGroup"
+  <ng-template #appearance>
+    <div [formGroup]="characterFormGroups.appearance"
       class="px-3 pt-4">
       <ion-input formControlName="height" label="Altura"
         label-placement="floating"
@@ -92,17 +104,7 @@
       <ion-textarea formControlName="accessories" label="Accesorios"
         label-placement="floating"
         fill="outline"></ion-textarea>
-    </form>
-
-
-
-
-  <ion-row class="mt-3">
-    <ion-col>
-      <ion-button (click)="stepperNext()" expand="block"
-        [disabled]="buttonDisabled()">Siguiente</ion-button>
-    </ion-col>
-  </ion-row>
-
+  </div>
+  </ng-template>
 
 </ion-content>

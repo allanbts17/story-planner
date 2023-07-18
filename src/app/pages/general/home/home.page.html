@@ -2,9 +2,5 @@
 
 <ion-content [fullscreen]="true">
   <app-tabs [items]="tabList" (selectedEvent)="tabSelected($event)"></app-tabs>
-    {{test}}
-  <div *ngIf="step == 0">step 0 - {{step}} </div>
-  <div *ngIf="step == 1">step 1 - {{step}} </div>
-  <ion-button>change</ion-button>
   <app-resource-list></app-resource-list>
 </ion-content>

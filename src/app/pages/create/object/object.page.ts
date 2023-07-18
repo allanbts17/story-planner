@@ -21,6 +21,7 @@ export class ObjectPage implements OnInit {
   edit = false
   editAndImageChanged: string | null = null
   resId!: string
+  step = 0
 
   formGroup = new FormGroup({
     name: new FormControl('', Validators.required),
@@ -36,6 +37,10 @@ export class ObjectPage implements OnInit {
     private storage: StorageService,
     private utils: UtilsService) {
     this.setData()
+  }
+
+  changetest(){
+    this.step = this.step==0? 1:0
   }
 
   setData() {
