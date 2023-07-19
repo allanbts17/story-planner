@@ -8,10 +8,7 @@ export interface Character {
   relations: charRelations;
   aspirations: charAspirations;
   storyRole: charStoryRole;
-  other: {
-    label: string;
-    data: string;
-  }|null
+  other: charOther;
 }
 
 export interface charBasic {
@@ -34,8 +31,6 @@ export interface charAppearance {
   hair: string|null;
   distinguishableTraits: string|null;
   posture: string|null;
-  storyId: string|null;
-  image: string|null;
   otherPhysicalTrait: string|null;
   outfit: string|null;
   accessories: string|null
@@ -57,7 +52,6 @@ export interface charReactions {
   sorprise: string|null;
   sadness: string|null;
   rejection: string|null;
-  madness: string|null;
   anger: string|null;
   hapiness: string|null;
   anotherReaction: string|null;
@@ -78,15 +72,16 @@ export interface charHome {
 }
 
 export interface charRelations {
-  character: charRelationData[]
+  character: charRelationData[]|null
 }
 
 //export type RelationshipStatus = 'perfect'|'verygood'|'good'|'regular'|'bad'|'verybad'|'appalling'
 export interface charRelationData {
   name: string;
-  relationship: 1|2|3|4|5|6|7;
+  relationship: string;
   relationType: string;
 }
+export type RelationType = 'friend'|'enemy'|'familiar'|'other'
 
 export interface charAspirations {
   hobbies: string|null;
@@ -98,7 +93,62 @@ export interface charAspirations {
 export type RolType = 'mainProtagonist'|'protagonist'|'side'|'antagonist'|'mainAntagonist'
 export interface charStoryRole {
   rol: RolType|null;
-  importantEvent: string|null
+  importantEvent: string|null;
   bestMemories: string|null;
   worstMemories: string|null;
+}
+
+export interface charOther {
+  label: string|null;
+  content: string|null;
+}
+
+const rolTypeClassify = {
+  'mainProtagonist':'Protagonista principal',
+  'protagonist':'Protagonista',
+  'side':'Secundario',
+  'antagonist':'Antagonista',
+  'mainAntagonist':'Antagonista principal'
+}
+
+const idToRolLabel = {
+  1:'Protagonista principal',
+  2:'Protagonista',
+  3:'Secundario',
+  4:'Antagonista',
+  5:'Antagonista principal'
+}
+
+const idToRolType = {
+  1:'mainProtagonist',
+  2:'protagonist',
+  3:'side',
+  4:'antagonist',
+  5:'mainAntagonist',
+}
+
+const relationClassify = {
+  1: 'Pésima',
+  2: 'Muy mala',
+  3: 'Mala',
+  4: 'Regular',
+  5: 'Buena',
+  6: 'Muy buena',
+  7: 'Perfecta'
+}
+
+export const getRolLabel = (num: '1'|'2'|'3'|'4'|'5') => {
+  return idToRolLabel[num]
+}
+
+export const getRolType = (num: '1'|'2'|'3'|'4'|'5') => {
+  return idToRolType[num]
+}
+
+export const getRolByType = (type: RolType) => {
+  return rolTypeClassify[type]
+}
+
+export const getRelationByNumber = (num: '1'|'2'|'3'|'4'|'5'|'6'|'7'): string => {
+  return relationClassify[num]
 }

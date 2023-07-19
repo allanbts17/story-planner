@@ -4,6 +4,7 @@ import { ModalService } from 'src/app/services/modal.service';
 import { NavigateService } from 'src/app/services/navigate.service';
 import { getResourceCollectionById } from 'src/app/shared/classes/resourceData';
 import { ResourceInterfaces } from 'src/app/shared/classes/types';
+import { Character } from 'src/app/shared/interfaces/character';
 import { Object } from 'src/app/shared/interfaces/object';
 import { Place } from 'src/app/shared/interfaces/place';
 import { Series } from 'src/app/shared/interfaces/series';
@@ -75,6 +76,17 @@ export class ResourceListComponent {
           image: data.image,
           title: data.name,
           subtitle: data.description,
+          raw: data
+        } as GenericResource
+      })
+    } else if (resourceType == 'character') {
+      let res: Character[] = <Character[]>resourceList
+      console.log(res);
+      this.list = res.map(data => {
+        return {
+          image: data.basic.image,
+          title: data.basic.name + ' ' + data.basic.lastname,
+          subtitle: data.basic.nickname? data.basic.nickname:data.personality.generalPersonality,
           raw: data
         } as GenericResource
       })

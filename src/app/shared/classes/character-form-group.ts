@@ -42,7 +42,6 @@ export class CharacerFormGroups {
     sorprise: new FormControl(''),
     sadness: new FormControl(''),
     rejection: new FormControl(''),
-    madness: new FormControl(''),
     anger: new FormControl(''),
     hapiness: new FormControl(''),
     anotherReaction: new FormControl(''),
@@ -63,7 +62,14 @@ export class CharacerFormGroups {
   })
 
   relations = new FormGroup({
-    character: new FormGroup([])
+    characters: new FormGroup([])
+  })
+
+  aspirations = new FormGroup({
+    hobbies: new FormControl(''),
+    dislike: new FormControl(''),
+    professionOrStudies: new FormControl(''),
+    goals: new FormControl(''),
   })
 
   storyRole = new FormGroup({
@@ -71,5 +77,10 @@ export class CharacerFormGroups {
     importantEvent: new FormControl(''),
     bestMemories: new FormControl(''),
     worstMemories: new FormControl('')
+  })
+
+  other = new FormGroup({
+    label: new FormControl(''),
+    content: new FormControl('')
   })
 }
