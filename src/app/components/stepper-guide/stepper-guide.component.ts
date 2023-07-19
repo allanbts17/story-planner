@@ -22,7 +22,7 @@ export class StepperGuideComponent implements OnInit {
         label: lbl,
         step: count,
         active: false,
-        passed: false
+        passed: !this.lineal
       })
       count++;
     })
@@ -53,12 +53,12 @@ export class StepperGuideComponent implements OnInit {
   }
 
   // private updateSteps(){
-  //   this.steps.
+
   // }
 
   protected stepSelected(step: Step) {
     console.log('s',step,this.currentStep);
-    if(!step.passed || step.step > this.currentStep || step.active ) return;
+    if(!step.passed || (step.step > this.currentStep) && this.lineal || step.active ) return;
     this.steps.forEach(stp => { stp.active = false })
     let finded: Step = <Step>this.steps.find(stp => stp.step == step.step)//.active
     finded.active = true

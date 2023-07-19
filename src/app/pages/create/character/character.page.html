@@ -3,7 +3,7 @@
 <ion-content>
   <div [id]="this.stepperID" class="fixed shadow-md stepper-container z-50">
     <app-stepper-guide (stepSelectedEvent)="stepSelected($event)"
-      [stepLabels]="stepLabels"></app-stepper-guide>
+      [stepLabels]="stepLabels" [lineal]="!edit"></app-stepper-guide>
   </div>
   <div [id]="stepperBackID" class="w-full"></div>
 
