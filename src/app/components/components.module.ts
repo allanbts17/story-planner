@@ -7,9 +7,10 @@ import { TabsComponent } from './tabs/tabs.component';
 import { ResourceListComponent } from './resource-list/resource-list.component';
 import { ImagePasteAreaComponent } from './image-paste-area/image-paste-area.component';
 import { StepperGuideComponent } from './stepper-guide/stepper-guide.component';
+import { ViewSegmentComponent } from './view-segment/view-segment.component';
 
 const components = [ HeaderComponent, TabsComponent,
-   ResourceListComponent, ImagePasteAreaComponent, StepperGuideComponent ]
+   ResourceListComponent, ImagePasteAreaComponent, StepperGuideComponent, ViewSegmentComponent ]
 
 @NgModule({
   declarations: [components],

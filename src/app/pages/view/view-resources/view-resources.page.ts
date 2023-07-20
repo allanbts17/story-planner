@@ -6,6 +6,7 @@ import { getSingularName } from 'src/app/shared/classes/resourceData';
 import { ResourceInterfaces } from 'src/app/shared/classes/types';
 import { Collections } from 'src/app/shared/enums/collections';
 import { Chapter, SelectableChapter } from 'src/app/shared/interfaces/chapter';
+import { Character, charRelationData } from 'src/app/shared/interfaces/character';
 import { Object } from 'src/app/shared/interfaces/object';
 import { Place } from 'src/app/shared/interfaces/place';
 import { Series } from 'src/app/shared/interfaces/series';
@@ -22,6 +23,7 @@ export class ViewResourcesPage implements OnInit {
   series!: Series;
   place!: Place;
   object!: Object;
+  character!: Character;
   title: string
 
   storiesBySeries!: string[]
@@ -67,6 +69,12 @@ export class ViewResourcesPage implements OnInit {
       if (this.object.storyId)
         this.storyByResource = (await this.store.getDocument(Collections.STORY, this.object.storyId)).title
       await this.modal.stopLoading()
+    } else if (this.resourceType == 'character') {
+      this.character = <Character>res
+      await this.modal.showLoading()
+      if (this.character.basic.storyId)
+        this.storyByResource = (await this.store.getDocument(Collections.STORY, this.character.basic.storyId)).title
+      await this.modal.stopLoading()
     }
   }
 
@@ -79,6 +87,14 @@ export class ViewResourcesPage implements OnInit {
     if(!this.showAllChapterSummaries){
       this.chapterByStory.forEach(chp => chp.select = false)
     }
+  }
+
+  getTypeRelateds(type: 'Amigo' | 'Enemigo' | 'Familiar' | 'Other'): charRelationData[] {
+    if(this.character.relations.character)
+      return this.character.relations.character.filter(char => {
+        return char.relationType == type
+      })
+    else return []
   }
   
   editResource(){

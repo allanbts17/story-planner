@@ -6,6 +6,7 @@
     <ng-container *ngSwitchCase="'series'" [ngTemplateOutlet]="seriesTem"></ng-container>
     <ng-container *ngSwitchCase="'place'" [ngTemplateOutlet]="placeTem"></ng-container>
     <ng-container *ngSwitchCase="'object'" [ngTemplateOutlet]="objectTem"></ng-container>
+    <ng-container *ngSwitchCase="'character'" [ngTemplateOutlet]="characterTem"></ng-container>
   </ng-container>
 </ion-content>
 
@@ -128,5 +129,128 @@
       <p>{{object.additionalInfo}}</p>
     </div>
     <br />
+  </div>
+</ng-template>
+
+<ng-template #characterTem>
+  <div class="w-full flex justify-center">
+    <img *ngIf="character.basic.image" [src]="character.basic.image">
+  </div>
+  <br />
+  <div class="px-2">
+    <h2 class="text-xl font-bold">{{character.basic.name+' '+character.basic.lastname}}</h2>
+    <h2 *ngIf="character.basic.storyId" class="text-sm font-semibold mb-1">{{storyByResource}}</h2>
+    <br/>
+    <h2 class="text-lg font-bold text-center">Básico</h2>
+    <app-view-segment [data]="character.basic.nickname" title="Apodo"></app-view-segment>
+    <app-view-segment [data]="character.basic.age" title="Edad"></app-view-segment>
+    <app-view-segment [data]="character.basic.gender" title="Género"></app-view-segment>
+    <app-view-segment [data]="character.basic.birthdate" title="Fecha de cumpleaños"></app-view-segment>
+    <app-view-segment [data]="character.basic.birthPlace" title="Lugar de nacimiento"></app-view-segment>
+    <br/>
+    <h2 class="text-lg font-bold text-center">Apariencia</h2>
+    <app-view-segment [data]="character.appearance.height" title="Altura"></app-view-segment>
+    <app-view-segment [data]="character.appearance.weight" title="Peso"></app-view-segment>
+    <app-view-segment [data]="character.appearance.skin" title="Piel"></app-view-segment>
+    <app-view-segment [data]="character.appearance.eyes" title="Ojos"></app-view-segment>
+    <app-view-segment [data]="character.appearance.hair" title="Cabello"></app-view-segment>
+    <app-view-segment [data]="character.appearance.distinguishableTraits" title="Rasgos distinguibles"></app-view-segment>
+    <app-view-segment [data]="character.appearance.posture" title="Postura"></app-view-segment>
+    <app-view-segment [data]="character.appearance.otherPhysicalTrait" title="Otro rasgo físico"></app-view-segment>
+    <app-view-segment [data]="character.appearance.outfit" title="Vestimenta"></app-view-segment>
+    <app-view-segment [data]="character.appearance.accessories" title="Accesorios"></app-view-segment>
+    <br />
+    <h2 class="text-lg font-bold text-center">Personalidad</h2>
+    <app-view-segment [data]="character.personality.generalPersonality" title="Carácter general"></app-view-segment>
+    <app-view-segment [data]="character.personality.qualities" title="Cualidades"></app-view-segment>
+    <app-view-segment [data]="character.personality.defects" title="Defectos"></app-view-segment>
+    <app-view-segment [data]="character.personality.intelligence" title="Inteligencia"></app-view-segment>
+    <app-view-segment [data]="character.personality.habits" title="Hábitos"></app-view-segment>
+    <app-view-segment [data]="character.personality.fears" title="Miedos"></app-view-segment>
+    <app-view-segment [data]="character.personality.skills" title="Habilidades"></app-view-segment>
+    <app-view-segment [data]="character.personality.weaknesses" title="Debilidades"></app-view-segment>
+    <br />
+    <h2 class="text-lg font-bold text-center">Reacciones</h2>
+    <app-view-segment [data]="character.reactions.fear" title="Carácter general"></app-view-segment>
+    <app-view-segment [data]="character.reactions.sorprise" title="Cualidades"></app-view-segment>
+    <app-view-segment [data]="character.reactions.sadness" title="Defectos"></app-view-segment>
+    <app-view-segment [data]="character.reactions.rejection" title="Inteligencia"></app-view-segment>
+    <app-view-segment [data]="character.reactions.anger" title="Hábitos"></app-view-segment>
+    <app-view-segment [data]="character.reactions.hapiness" title="Miedos"></app-view-segment>
+    <app-view-segment [data]="character.reactions.anotherReaction" title="Debilidades"></app-view-segment>
+    <h2 class="text-md font-bold text-center">Frases</h2>
+    <app-view-segment [data]="character.reactions.doubtPhrases" title="Habilidades"></app-view-segment>
+    <app-view-segment [data]="character.reactions.hapinessPhrases" title="Debilidades"></app-view-segment>
+    <app-view-segment [data]="character.reactions.sadnessPhrases" title="Debilidades"></app-view-segment>
+    <app-view-segment [data]="character.reactions.enthusiasmPhrases" title="Debilidades"></app-view-segment>
+    <app-view-segment [data]="character.reactions.angerPhrases" title="Debilidades"></app-view-segment>
+    <app-view-segment [data]="character.reactions.anotherPhrases" title="Debilidades"></app-view-segment>
+    <br />
+    <h2 class="text-md font-bold text-center">Rol en la historia</h2>
+    <app-view-segment [data]="character.storyRole.rol" title="Rol"></app-view-segment>
+    <app-view-segment [data]="character.storyRole.importantEvent" title="Evento más importante"></app-view-segment>
+    <app-view-segment [data]="character.storyRole.bestMemories" title="Mejores recuerdos"></app-view-segment>
+    <app-view-segment [data]="character.storyRole.worstMemories" title="Peores recuerdos"></app-view-segment>
+    <app-view-segment [data]="character.reactions.angerPhrases" title="Debilidades"></app-view-segment>
+    <app-view-segment [data]="character.reactions.anotherPhrases" title="Debilidades"></app-view-segment>
+    <h2 class="text-md font-bold text-center mt-1">Otro</h2>
+    <app-view-segment [data]="character.other.content" title="{{character.other.label}}"></app-view-segment>
+    <br />
+    <h2 class="text-md font-bold text-center">Relaciones</h2>
+    <ion-list *ngIf="character.relations.character" lines="inset">
+      <ion-item-group *ngIf="getTypeRelateds('Amigo').length > 0">
+        <ion-item-divider>
+          <ion-label>Amigos</ion-label>
+        </ion-item-divider>
+        <ion-item *ngFor="let char of getTypeRelateds('Amigo')" lines="inset">
+          <ion-label>
+            <h2>{{char.name}}</h2>
+            <p>{{char.relationship}}</p>
+          </ion-label>
+          <!-- <ion-icon (click)="deleteRelated(char)" name="trash" slot="end"></ion-icon> -->
+        </ion-item>
+      </ion-item-group>
+
+      <ion-item-group *ngIf="getTypeRelateds('Enemigo').length > 0">
+        <ion-item-divider>
+          <ion-label>Enemigos</ion-label>
+        </ion-item-divider>
+        <ion-item *ngFor="let char of getTypeRelateds('Enemigo')" lines="inset">
+          <ion-label>
+            <h2>{{char.name}}</h2>
+            <p>{{char.relationship}}</p>
+          </ion-label>
+          <!-- <ion-icon (click)="deleteRelated(char)" name="trash" slot="end"></ion-icon> -->
+        </ion-item>
+      </ion-item-group>
+
+      <ion-item-group *ngIf="getTypeRelateds('Familiar').length > 0">
+        <ion-item-divider>
+          <ion-label>Familiares</ion-label>
+        </ion-item-divider>
+        <ion-item *ngFor="let char of getTypeRelateds('Familiar')" lines="inset">
+          <ion-label>
+            <h2>{{char.name}}</h2>
+            <p>{{char.relationship}}</p>
+          </ion-label>
+          <!-- <ion-icon (click)="deleteRelated(char)" name="trash" slot="end"></ion-icon> -->
+        </ion-item>
+      </ion-item-group>
+
+      <ion-item-group *ngIf="getTypeRelateds('Other').length > 0">
+        <ion-item-divider>
+          <ion-label>Otros</ion-label>
+        </ion-item-divider>
+        <ion-item *ngFor="let char of getTypeRelateds('Other')" lines="inset">
+          <ion-label>
+            <h2>{{char.name}}</h2>
+            <p>{{char.relationship}}</p>
+          </ion-label>
+          <!-- <ion-icon (click)="deleteRelated(char)" name="trash" slot="end"></ion-icon> -->
+        </ion-item>
+      </ion-item-group>
+
+    </ion-list>
+
   </div>
 </ng-template>

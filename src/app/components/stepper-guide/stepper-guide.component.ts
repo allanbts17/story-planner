@@ -32,11 +32,11 @@ export class StepperGuideComponent implements OnInit {
     // setInterval(()=> {
     //   this.next()
     // },500)
-   }
+  }
 
-  next(){
-    if(this.currentStep == this.steps.length-1) return
-    if(this.currentStep > this.selectedStep){
+  next() {
+    if (this.currentStep == this.steps.length - 1) return
+    if (this.currentStep > this.selectedStep) {
       this.selectedStep++
       this.steps.forEach(stp => {
         stp.active = stp.step == this.selectedStep
@@ -47,9 +47,10 @@ export class StepperGuideComponent implements OnInit {
     this.selectedStep = this.currentStep
     this.steps.forEach(stp => {
       stp.active = stp.step == this.currentStep
-      stp.passed = stp.step <= this.currentStep
+      if (this.lineal)
+        stp.passed = (stp.step <= this.currentStep)
     })
-  //  this.updateSteps()
+    //  this.updateSteps()
   }
 
   // private updateSteps(){
@@ -57,8 +58,9 @@ export class StepperGuideComponent implements OnInit {
   // }
 
   protected stepSelected(step: Step) {
-    console.log('s',step,this.currentStep);
-    if(!step.passed || (step.step > this.currentStep) && this.lineal || step.active ) return;
+    console.log('s', step, this.currentStep);
+    if ((!step.passed || step.active) && this.lineal) return;
+    this.currentStep = step.step
     this.steps.forEach(stp => { stp.active = false })
     let finded: Step = <Step>this.steps.find(stp => stp.step == step.step)//.active
     finded.active = true
