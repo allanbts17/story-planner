@@ -26,8 +26,11 @@
     <p>{{story.genre.join(', ')}}</p>
     <br />
     <div *ngIf="chapterByStory && chapterByStory.length > 0">
-      <p class="text-sm font-medium">Lista de capítulos</p>
-      <ion-list>
+      <ion-item button>
+        <ion-label (click)="showChapters = !showChapters" class="text-lg font-bold">Lista de capítulos</ion-label>
+        <ion-icon [name]="showChapters? 'chevron-down':'chevron-forward'"></ion-icon>
+      </ion-item>
+      <ion-list *ngIf="showChapters">
         <ion-list-header>
           <ion-label>Capítulos</ion-label>
           <ion-button (click)="changeChapterSummaries()"
@@ -48,6 +51,53 @@
           </ion-item-options>
         </ion-item-sliding>
       </ion-list>
+
+      <ion-item *ngIf="characterByStory.length > 0" button>
+        <ion-label (click)="showCharacters = !showCharacters" class="text-lg font-bold">Lista de personajes</ion-label>
+        <ion-icon [name]="showCharacters? 'chevron-down':'chevron-forward'"></ion-icon>
+      </ion-item>
+      <ion-list *ngIf="showCharacters">
+        <ion-item *ngFor="let res of characterByStory" button>
+          <ion-img slot="start" class="w-16 h-16"
+            [src]="res.basic?.image || 'assets/placeholder.jpg'"></ion-img>
+          <ion-label>
+            <h3>{{res.basic.name +' '+res.basic.lastname}}</h3>
+            <p>{{res.basic.nickname}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-item *ngIf="placesByStory.length > 0" button>
+        <ion-label (click)="showPlaces = !showPlaces" class="text-lg font-bold">Lista de lugares</ion-label>
+        <ion-icon [name]="showPlaces? 'chevron-down':'chevron-forward'"></ion-icon>
+      </ion-item>
+      <ion-list *ngIf="showPlaces">
+        <ion-item *ngFor="let res of placesByStory" button>
+          <ion-img slot="start" class="w-16 h-16"
+            [src]="res?.image || 'assets/placeholder.jpg'"></ion-img>
+          <ion-label>
+            <h3>{{res.name}}</h3>
+            <p>{{res.generalDescription}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+      <ion-item *ngIf="objectsByStory.length > 0" button>
+        <ion-label (click)="showObjects = !showObjects" class="text-lg font-bold">Lista de objectos</ion-label>
+        <ion-icon [name]="showObjects? 'chevron-down':'chevron-forward'"></ion-icon>
+      </ion-item>
+      <ion-list *ngIf="showObjects">
+        <ion-item *ngFor="let res of objectsByStory" button>
+          <ion-img slot="start" class="w-16 h-16"
+            [src]="res?.image || 'assets/placeholder.jpg'"></ion-img>
+          <ion-label>
+            <h3>{{res.name}}</h3>
+            <p>{{res.description}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+
+      
     </div>
   </div>
 </ng-template>
@@ -141,14 +191,14 @@
     <h2 class="text-xl font-bold">{{character.basic.name+' '+character.basic.lastname}}</h2>
     <h2 *ngIf="character.basic.storyId" class="text-sm font-semibold mb-1">{{storyByResource}}</h2>
     <br/>
-    <h2 class="text-lg font-bold text-center">Básico</h2>
+    <h2 *ngIf="hasSomeValue(character.basic)" class="text-lg font-bold text-center">Básico</h2>
     <app-view-segment [data]="character.basic.nickname" title="Apodo"></app-view-segment>
     <app-view-segment [data]="character.basic.age" title="Edad"></app-view-segment>
     <app-view-segment [data]="character.basic.gender" title="Género"></app-view-segment>
     <app-view-segment [data]="character.basic.birthdate" title="Fecha de cumpleaños"></app-view-segment>
     <app-view-segment [data]="character.basic.birthPlace" title="Lugar de nacimiento"></app-view-segment>
     <br/>
-    <h2 class="text-lg font-bold text-center">Apariencia</h2>
+    <h2 *ngIf="hasSomeValue(character.appearance)" class="text-lg font-bold text-center">Apariencia</h2>
     <app-view-segment [data]="character.appearance.height" title="Altura"></app-view-segment>
     <app-view-segment [data]="character.appearance.weight" title="Peso"></app-view-segment>
     <app-view-segment [data]="character.appearance.skin" title="Piel"></app-view-segment>
@@ -160,7 +210,7 @@
     <app-view-segment [data]="character.appearance.outfit" title="Vestimenta"></app-view-segment>
     <app-view-segment [data]="character.appearance.accessories" title="Accesorios"></app-view-segment>
     <br />
-    <h2 class="text-lg font-bold text-center">Personalidad</h2>
+    <h2 *ngIf="hasSomeValue(character.personality)" class="text-lg font-bold text-center">Personalidad</h2>
     <app-view-segment [data]="character.personality.generalPersonality" title="Carácter general"></app-view-segment>
     <app-view-segment [data]="character.personality.qualities" title="Cualidades"></app-view-segment>
     <app-view-segment [data]="character.personality.defects" title="Defectos"></app-view-segment>
@@ -170,7 +220,7 @@
     <app-view-segment [data]="character.personality.skills" title="Habilidades"></app-view-segment>
     <app-view-segment [data]="character.personality.weaknesses" title="Debilidades"></app-view-segment>
     <br />
-    <h2 class="text-lg font-bold text-center">Reacciones</h2>
+    <h2 *ngIf="hasSomeValue(character.reactions)" class="text-lg font-bold text-center">Reacciones</h2>
     <app-view-segment [data]="character.reactions.fear" title="Carácter general"></app-view-segment>
     <app-view-segment [data]="character.reactions.sorprise" title="Cualidades"></app-view-segment>
     <app-view-segment [data]="character.reactions.sadness" title="Defectos"></app-view-segment>
@@ -178,7 +228,7 @@
     <app-view-segment [data]="character.reactions.anger" title="Hábitos"></app-view-segment>
     <app-view-segment [data]="character.reactions.hapiness" title="Miedos"></app-view-segment>
     <app-view-segment [data]="character.reactions.anotherReaction" title="Debilidades"></app-view-segment>
-    <h2 class="text-md font-bold text-center">Frases</h2>
+    <h2 *ngIf="hasSomeValue(character.reactions)" class="text-md font-bold text-center">Frases</h2>
     <app-view-segment [data]="character.reactions.doubtPhrases" title="Habilidades"></app-view-segment>
     <app-view-segment [data]="character.reactions.hapinessPhrases" title="Debilidades"></app-view-segment>
     <app-view-segment [data]="character.reactions.sadnessPhrases" title="Debilidades"></app-view-segment>
@@ -186,17 +236,17 @@
     <app-view-segment [data]="character.reactions.angerPhrases" title="Debilidades"></app-view-segment>
     <app-view-segment [data]="character.reactions.anotherPhrases" title="Debilidades"></app-view-segment>
     <br />
-    <h2 class="text-md font-bold text-center">Rol en la historia</h2>
+    <h2 *ngIf="hasSomeValue(character.storyRole)" class="text-md font-bold text-center">Rol en la historia</h2>
     <app-view-segment [data]="character.storyRole.rol" title="Rol"></app-view-segment>
     <app-view-segment [data]="character.storyRole.importantEvent" title="Evento más importante"></app-view-segment>
     <app-view-segment [data]="character.storyRole.bestMemories" title="Mejores recuerdos"></app-view-segment>
     <app-view-segment [data]="character.storyRole.worstMemories" title="Peores recuerdos"></app-view-segment>
     <app-view-segment [data]="character.reactions.angerPhrases" title="Debilidades"></app-view-segment>
     <app-view-segment [data]="character.reactions.anotherPhrases" title="Debilidades"></app-view-segment>
-    <h2 class="text-md font-bold text-center mt-1">Otro</h2>
+    <h2 *ngIf="hasSomeValue(character.other)" class="text-md font-bold text-center mt-1">Otro</h2>
     <app-view-segment [data]="character.other.content" title="{{character.other.label}}"></app-view-segment>
     <br />
-    <h2 class="text-md font-bold text-center">Relaciones</h2>
+    <h2 *ngIf="character.relations.character" class="text-md font-bold text-center">Relaciones</h2>
     <ion-list *ngIf="character.relations.character" lines="inset">
       <ion-item-group *ngIf="getTypeRelateds('Amigo').length > 0">
         <ion-item-divider>

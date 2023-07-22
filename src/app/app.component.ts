@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
   public generalItems = [
     { title: 'Inicio', url: 'home', icon: 'home' },
     { title: 'Evolución', url: 'evolution', icon: 'swap-horizontal' },
-    { title: 'Glosario', url: 'glosary', icon: 'archive' }
+    { title: 'Glosario', url: 'glossary', icon: 'archive' }
   ]
   constructor(protected nav: NavigateService) {}
 

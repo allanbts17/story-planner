@@ -10,6 +10,7 @@ export class HeaderComponent  implements OnInit {
   @Input() title: string = ''
   @Input() showEdit: boolean = false
   @Input() showHome = true
+  @Input() modal: any
   @Output() editEvent = new EventEmitter<any>()
   //@Output() homeEvent = new EventEmitter<any>()
   constructor(private nav: NavigateService) { }
@@ -22,6 +23,10 @@ export class HeaderComponent  implements OnInit {
 
   onHome(){
     this.nav.navigate('home')
+  }
+
+  onClose(){
+
   }
 
 }

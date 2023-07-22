@@ -6,5 +6,6 @@ export enum Collections {
   CHARACTER = "Character",
   WORLD = "World",
   PLACE = "Place",
-  OBJECT = "Object"
+  OBJECT = "Object",
+  GLOSSARY = "Glossary"
 }

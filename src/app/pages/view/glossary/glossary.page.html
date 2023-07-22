@@ -1,0 +1,70 @@
+<app-header title="Glosario"></app-header>
+
+<ion-content>
+  <div class="flex flex-row space-x-2 mt-2 px-2">
+    <ion-select label="Filtrar por historia" label-placement="floating" fill="outline" (ionChange)="onSelectChange($event)">
+      <ion-select-option *ngFor="let sre of storySeriesList.concat({name: 'Todas', id:'0',origin:'story'})" [value]="sre.id">{{sre.name}}</ion-select-option>
+    </ion-select>
+    <ion-button  class="h-12" [id]="modalId">
+      Añadir
+    </ion-button>
+  </div>  
+
+  <ion-list *ngIf="definitions.length > 0" lines="inset">
+    <ion-item-group *ngFor="let letter of alphabet">
+      <ion-item-divider *ngIf="filterDefinitionsByLetter(letter).length > 0">
+        <ion-label>{{letter}}</ion-label>
+      </ion-item-divider>
+      <ion-item-sliding *ngFor="let def of filterDefinitionsByLetter(letter)">
+        <ion-item  lines="inset" button>
+          <ion-label>
+            <h2>{{def.concept}}</h2>
+            <p>{{def.definition}}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item-options side="start">
+          <ion-item-option (click)="editItem(def)" color="primary">Editar</ion-item-option>
+          <ion-item-option (click)="deleteItem(def)" color="danger">Eliminar</ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+     
+    </ion-item-group>
+  </ion-list>
+ 
+  
+
+  <ion-modal #modal [trigger]="modalId" (willDismiss)="onWillDismiss($event)" (willPresent)="onWillPresent()">
+    <ng-template>
+      <app-header [modal]="modal"
+        [title]="(edit? 'Editar':'Nueva')+ ' definición'"></app-header>
+      <ion-content>
+        <form [formGroup]="formGroup" (ngSubmit)="saveDefinition()"
+          class="px-3 pt-4">
+
+          <ion-input formControlName="concept" label="Concepto"
+            label-placement="floating"
+            fill="outline"></ion-input>
+          <br />
+          <ion-textarea formControlName="definition" label="Definición"
+            labelPlacement="floating" fill="outline"></ion-textarea>
+          <br />
+
+          <ion-select label="Historia o serie"
+            formControlName="originId" label-placement="floating" fill="outline">
+            <ion-select-option *ngFor="let sre of storySeriesList"
+              [value]="sre.id">{{sre.name}}</ion-select-option>
+          </ion-select>
+
+          <ion-row class="mt-4">
+            <ion-col>
+              <ion-button type="submit" expand="block"
+                [disabled]="!formGroup.valid">Guardar</ion-button>
+            </ion-col>
+          </ion-row>
+        </form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

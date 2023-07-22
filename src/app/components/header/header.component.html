@@ -1,4 +1,4 @@
-<ion-header [translucent]="true">
+<ion-header *ngIf="!modal" [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button auto-hide="false"></ion-menu-button>
@@ -9,6 +9,17 @@
       </ion-button>
       <ion-button *ngIf="showHome" (click)="onHome()">
         <ion-icon name="home"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-header *ngIf="modal" [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="modal.dismiss()">
+        <ion-icon name="close"></ion-icon>
       </ion-button>
     </ion-buttons>
     <ion-title>{{title}}</ion-title>

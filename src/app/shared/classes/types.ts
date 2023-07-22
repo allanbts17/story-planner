@@ -1,3 +1,4 @@
+import { Definition } from "src/app/interfaces/definition";
 import { Collections } from "../enums/collections";
 import { Chapter } from "../interfaces/chapter";
 import { Character } from "../interfaces/character";
@@ -8,4 +9,4 @@ import { Story } from "../interfaces/story";
 
 export type CollectionTypes = `${Collections}`;
 
-export type ResourceInterfaces = Story | Series | Place | Object | Character | Chapter
+export type ResourceInterfaces = Story | Series | Place | Object | Character | Chapter | Definition

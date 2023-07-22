@@ -5,20 +5,12 @@
     <!-- <div #imageContainer></div> -->
 
     <app-image-paste-area [(imageData)]="imageData"></app-image-paste-area>
-    <!-- <div id="story-image-copy-area" class="flex items-center justify-center border-2 rounded-lg border-dashed border-blue-700 h-14">
-      <p class="text-center">Copie una imagen y péguela aquí</p>
-    </div> -->
-    <!-- <ion-input helperText="Esto no es obligatorio" formControlName="image" label="Imagen" label-placement="floating" fill="outline"></ion-input> -->
     <br />
     <ion-input formControlName="title" label="Título" label-placement="floating"
       fill="outline"></ion-input>
     <br />
-    <!-- <ion-input helperText="Esto no es obligatorio" formControlName="series"
-      label="Serie" label-placement="floating" fill="outline"></ion-input> -->
       <ion-select helperText="Esto no es obligatorio" label="Serie" formControlName="series" label-placement="floating" fill="outline">
         <ion-select-option *ngFor="let sre of seriesList" [value]="sre.id">{{sre.title}}</ion-select-option>
-        <!-- <ion-select-option value="banana">Banana</ion-select-option>
-        <ion-select-option value="orange">Orange</ion-select-option> -->
       </ion-select>
     <br />
 

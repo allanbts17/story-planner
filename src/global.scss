@@ -39,3 +39,10 @@ ion-menu::part(container) {
 ion-textarea{
   height: 80px;
 }
+
+ion-alert .alert-wrapper {
+  width: 90% !important;
+  max-width: 100% !important;
+  // --width: 360px;
+  // --max-width: 360px;
+}

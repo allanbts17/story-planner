@@ -29,9 +29,18 @@ export class ViewResourcesPage implements OnInit {
   storiesBySeries!: string[]
   storyByResource: string = ''
   chapterByStory!: SelectableChapter[]
+  characterByStory: Character[] = []
+  placesByStory: Place[] = []
+  objectsByStory: Object[] = []
+
 
   showAllChapterSummaries = false
   resourceToEdit: any
+  showChapters = false
+  showCharacters = false
+  showPlaces = false
+  showObjects = false
+
   constructor(private nav: NavigateService,
     private store: FirestoreService,
     private modal: ModalService) {
@@ -42,8 +51,11 @@ export class ViewResourcesPage implements OnInit {
     this.setResource(resourceData)
   }
 
+  
+
 
   ngOnInit() {
+
   }
 
   async setResource(res: ResourceInterfaces) {
@@ -51,6 +63,19 @@ export class ViewResourcesPage implements OnInit {
       this.story = <Story>res
       await this.modal.showLoading()
       this.chapterByStory = (<SelectableChapter[]>(await this.store.getChaptersByStory(<string>res.id))).map(chp => { return { ...chp, select: false } })
+
+      let promises = [
+        this.store.getChaptersByStory(<string>res.id),
+        this.store.getCharacteresByStory(<string>res.id),
+        this.store.getObjectByStory(<string>res.id),
+        this.store.getPlacesByStory(<string>res.id)
+      ]
+      let data = await Promise.all(promises)
+      this.chapterByStory = (<SelectableChapter[]>data[0]).map(chp => { return { ...chp, select: false } })
+      this.characterByStory = <Character[]>data[1]
+      this.objectsByStory = <Object[]>data[2]
+      this.placesByStory = <Place[]>data[3]
+      console.log(data);
       await this.modal.stopLoading()
     } else if (this.resourceType == 'series') {
       this.series = <Series>res
@@ -80,6 +105,18 @@ export class ViewResourcesPage implements OnInit {
 
   getGenreText(genList: string[]) {
     return genList.join(', ')
+  }
+
+  hasSomeValue(obj: any){
+    let keys = Object.keys(obj)
+    let allNull = true
+    keys.forEach(key => {
+      if(obj[key]){
+        allNull = false
+      }
+    })
+    //console.log('hay value?',allNull,obj);
+    return !allNull
   }
 
   changeChapterSummaries(){
