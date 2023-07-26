@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "story-planner-a5166"
-  }
+  },
+  "targets": {
+    "story-planner-a5166": {
+      "hosting": {
+        "planner": [
+          "story-planner"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

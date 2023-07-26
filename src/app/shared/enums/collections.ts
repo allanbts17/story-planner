@@ -7,5 +7,6 @@ export enum Collections {
   WORLD = "World",
   PLACE = "Place",
   OBJECT = "Object",
-  GLOSSARY = "Glossary"
+  GLOSSARY = "Glossary",
+  EVOLUTION = "Evolution"
 }

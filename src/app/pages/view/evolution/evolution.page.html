@@ -1,0 +1,64 @@
+<app-header title="Evolución"></app-header>
+<ion-content [fullscreen]="true">
+  <app-fixed-element>
+    <div class="flex flex-row space-x-2 mt-2 px-2 w-full items-center">
+      <ion-select [label]="selectTitle" label-placement="floating"
+        fill="outline" (ionChange)="onSelectChange($event)">
+        <ion-select-option *ngFor="let res of resourceList" [value]="res">
+          {{res.name}}
+        </ion-select-option>
+      </ion-select>
+
+      <ion-button [id]="pickerId">Rescurso</ion-button>
+      <ion-picker [trigger]="pickerId" [columns]="pickerColumns"
+        [buttons]="pickerButtons"></ion-picker>
+    </div>
+    <ion-button [disabled]="!selectedResource" fill="outline" expand="full"
+      class="w-full" [id]="modalId">
+      Añadir
+    </ion-button>
+  </app-fixed-element>
+
+  <ion-list *ngIf="evolutionData.length > 0">
+    <ion-list-header>
+      <ion-label>Capítulos</ion-label>
+    </ion-list-header>
+
+    <ion-item-sliding *ngFor="let ch of evolutionData">
+      <ion-item button>
+        <ion-label>
+          <h3>Motivo de cambio</h3>
+          <p class="">{{ch.reason}}</p>
+          <h3 *ngIf="ch?.date">Fecha de cambio</h3>
+          <p *ngIf="ch?.date" class="">{{ch.date}}</p>
+          <div class="mt-4s" *ngFor="let data of ch.changedData">
+            <h3 class="font-semibold">{{data.key}}</h3>
+            <p class="">{{data.newData}}</p>
+          </div>
+        </ion-label>
+      </ion-item>
+      <ion-item-options side="start">
+        <ion-item-option (click)="editChange(ch)" color="primary">Editar</ion-item-option>
+        <ion-item-option (click)="deleteChange(ch)" color="danger">Eliminar</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <ion-modal #modal [trigger]="modalId" (willDismiss)="onWillDismiss($event)"
+    (willPresent)="onWillPresent()">
+    <ng-template>
+      <app-header [modal]="modal"
+        [title]="(edit? 'Editar':'Nueva')+ ' evolución'"></app-header>
+      <ion-content>
+        <app-place-form *ngIf="selectedResource.resourceType == 'place'"
+        (changedEvent)="onResourceChange($event)" [resourceData]="editEvolutionData?.data||selectedResource.raw" [isEvolution]="true"></app-place-form>
+        <app-object-form *ngIf="selectedResource.resourceType == 'object'"
+          (changedEvent)="onResourceChange($event)"
+          [resourceData]="editEvolutionData?.data||selectedResource.raw" [isEvolution]="true"></app-object-form>
+        <app-character-form *ngIf="selectedResource.resourceType == 'character'"
+        (changedEvent)="onResourceChange($event)" [resourceData]="editEvolutionData?.data||selectedResource.raw" [isEvolution]="true"></app-character-form>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

@@ -1,14 +1,16 @@
 <app-header title="Glosario"></app-header>
 
-<ion-content>
-  <div class="flex flex-row space-x-2 mt-2 px-2">
-    <ion-select label="Filtrar por historia" label-placement="floating" fill="outline" (ionChange)="onSelectChange($event)">
-      <ion-select-option *ngFor="let sre of storySeriesList.concat({name: 'Todas', id:'0',origin:'story'})" [value]="sre.id">{{sre.name}}</ion-select-option>
-    </ion-select>
-    <ion-button  class="h-12" [id]="modalId">
-      Añadir
-    </ion-button>
-  </div>  
+<ion-content class="relative">
+  <app-fixed-element>
+    <div class="flex flex-row space-x-2 mt-2 px-2 w-full">
+      <ion-select label="Filtrar por historia" label-placement="floating" fill="outline" (ionChange)="onSelectChange($event)">
+        <ion-select-option *ngFor="let sre of storySeriesList.concat({name: 'Todas', id:'0',origin:'story'})" [value]="sre.id">{{sre.name}}</ion-select-option>
+      </ion-select>
+      <ion-button  class="h-12" [id]="modalId">
+        Añadir
+      </ion-button>
+    </div> 
+  </app-fixed-element>
 
   <ion-list *ngIf="definitions.length > 0" lines="inset">
     <ion-item-group *ngFor="let letter of alphabet">

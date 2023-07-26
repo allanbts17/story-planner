@@ -6,6 +6,7 @@ import { NavigateService } from './services/navigate.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  wideScreen: boolean
   public createItems = [
     { title: 'Nueva serie', url: 'series', icon: 'layers' },
     { title: 'Nueva historia', url: 'story', icon: 'create' },
@@ -21,9 +22,15 @@ export class AppComponent implements OnInit {
     { title: 'Evolución', url: 'evolution', icon: 'swap-horizontal' },
     { title: 'Glosario', url: 'glossary', icon: 'archive' }
   ]
-  constructor(protected nav: NavigateService) {}
+  constructor(protected nav: NavigateService) {
+    let width = window.screen.width
+    this.wideScreen = width > 991
+    console.log(width);//991
+  }
 
   ngOnInit(): void {
+    
+
     this.nav.navigate('home')
   }
 

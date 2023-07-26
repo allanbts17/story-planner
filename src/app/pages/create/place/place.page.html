@@ -1,44 +1,5 @@
 <app-header [title]="(edit? 'Editar':'Nuevo') + ' lugar'"></app-header>
 
 <ion-content [fullscreen]="true">
-  <form [formGroup]="formGroup" (ngSubmit)="savePlace()" class="px-3 pt-4">
-    <app-image-paste-area [(imageData)]="imageData"></app-image-paste-area>
-    <br />
-    <ion-input formControlName="name" label="Nombre" label-placement="floating"
-      fill="outline"></ion-input>
-    <br />
-    <ion-input helperText="Esto no es obligatorio" formControlName="nickname" label="Apodo"
-      label-placement="floating"
-      fill="outline"></ion-input>
-    <br />
-    <ion-textarea formControlName="generalDescription"
-      label="Descripción general" label-placement="floating"
-      fill="outline"></ion-textarea>
-    <br />
-    <ion-textarea formControlName="content" label="Contenido"
-      label-placement="floating"
-      fill="outline"></ion-textarea>
-    <br />
-    <ion-select label="Historia" formControlName="storyId"
-      label-placement="floating" fill="outline">
-      <ion-select-option *ngFor="let story of storiesList" [value]="story.id">{{story.title}}</ion-select-option>
-    </ion-select>
-    <br />
-
-    <h3 class="w-full text-center text-lg">Sentidos</h3>
-    <br />
-    <ion-textarea helperText="Esto no es obligatorio" class="mb-1" formControlName="view" label="Vista"
-      labelPlacement="floating" fill="outline"></ion-textarea>
-    <ion-textarea helperText="Esto no es obligatorio" class="mb-1" formControlName="smell" label="Olor"
-      labelPlacement="floating" fill="outline"></ion-textarea>
-    <ion-textarea helperText="Esto no es obligatorio" class="mb-1" formControlName="sound" label="Sonido"
-      labelPlacement="floating" fill="outline"></ion-textarea>
-
-    <ion-row class="mt-3">
-      <ion-col>
-        <ion-button type="submit" expand="block" [disabled]="!formGroup.valid">Guardar</ion-button>
-      </ion-col>
-    </ion-row>
-  </form>
-
+  <app-place-form [edit]="edit" [resourceData]="resourseData"></app-place-form>
 </ion-content>

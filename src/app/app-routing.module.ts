@@ -46,6 +46,10 @@ const routes: Routes = [
   {
     path: 'glossary/:id',
     loadChildren: () => import('./pages/view/glossary/glossary.module').then( m => m.GlossaryPageModule)
+  },
+  {
+    path: 'evolution/:id',
+    loadChildren: () => import('./pages/view/evolution/evolution.module').then( m => m.EvolutionPageModule)
   }
 ];
 

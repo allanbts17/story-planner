@@ -59,7 +59,7 @@
       <ion-list *ngIf="showCharacters">
         <ion-item *ngFor="let res of characterByStory" button>
           <ion-img slot="start" class="w-16 h-16"
-            [src]="res.basic?.image || 'assets/placeholder.jpg'"></ion-img>
+            [src]="res.basic.image || 'assets/placeholder.jpg'"></ion-img>
           <ion-label>
             <h3>{{res.basic.name +' '+res.basic.lastname}}</h3>
             <p>{{res.basic.nickname}}</p>
@@ -229,20 +229,19 @@
     <app-view-segment [data]="character.reactions.hapiness" title="Miedos"></app-view-segment>
     <app-view-segment [data]="character.reactions.anotherReaction" title="Debilidades"></app-view-segment>
     <h2 *ngIf="hasSomeValue(character.reactions)" class="text-md font-bold text-center">Frases</h2>
-    <app-view-segment [data]="character.reactions.doubtPhrases" title="Habilidades"></app-view-segment>
-    <app-view-segment [data]="character.reactions.hapinessPhrases" title="Debilidades"></app-view-segment>
-    <app-view-segment [data]="character.reactions.sadnessPhrases" title="Debilidades"></app-view-segment>
-    <app-view-segment [data]="character.reactions.enthusiasmPhrases" title="Debilidades"></app-view-segment>
-    <app-view-segment [data]="character.reactions.angerPhrases" title="Debilidades"></app-view-segment>
-    <app-view-segment [data]="character.reactions.anotherPhrases" title="Debilidades"></app-view-segment>
+    <app-view-segment [data]="character.reactions.doubtPhrases" title="Duda"></app-view-segment>
+    <app-view-segment [data]="character.reactions.hapinessPhrases" title="Alegría"></app-view-segment>
+    <app-view-segment [data]="character.reactions.sadnessPhrases" title="Tristeza"></app-view-segment>
+    <app-view-segment [data]="character.reactions.enthusiasmPhrases" title="Entusiasmo"></app-view-segment>
+    <app-view-segment [data]="character.reactions.angerPhrases" title="Enojo"></app-view-segment>
+    <app-view-segment [data]="character.reactions.anotherPhrases" title="Otras frases"></app-view-segment>
     <br />
     <h2 *ngIf="hasSomeValue(character.storyRole)" class="text-md font-bold text-center">Rol en la historia</h2>
     <app-view-segment [data]="character.storyRole.rol" title="Rol"></app-view-segment>
     <app-view-segment [data]="character.storyRole.importantEvent" title="Evento más importante"></app-view-segment>
     <app-view-segment [data]="character.storyRole.bestMemories" title="Mejores recuerdos"></app-view-segment>
     <app-view-segment [data]="character.storyRole.worstMemories" title="Peores recuerdos"></app-view-segment>
-    <app-view-segment [data]="character.reactions.angerPhrases" title="Debilidades"></app-view-segment>
-    <app-view-segment [data]="character.reactions.anotherPhrases" title="Debilidades"></app-view-segment>
+
     <h2 *ngIf="hasSomeValue(character.other)" class="text-md font-bold text-center mt-1">Otro</h2>
     <app-view-segment [data]="character.other.content" title="{{character.other.label}}"></app-view-segment>
     <br />

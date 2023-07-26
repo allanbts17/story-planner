@@ -119,6 +119,19 @@ export class FirestoreService {
     }
   }
 
+  async getEvolutionOfResource(id: string){
+    try {
+      let obs$ = this.afs.collection(Collections.EVOLUTION, ref => ref.where('data.id', '==', id).orderBy('order', 'asc')).get()
+      let data = await firstValueFrom(obs$)
+      let arr: any[] = []
+      data.forEach(d => arr.push({ id: d.id, ...<any>d.data() }))
+      return arr;
+    } catch (error) {
+      console.log('Firestore error:', error);
+      return undefined
+    }
+  }
+
   // async getDefinitionsByOrigin(originId: string) {
   //   try {
   //     let obs$

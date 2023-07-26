@@ -46,3 +46,11 @@ ion-alert .alert-wrapper {
   // --width: 360px;
   // --max-width: 360px;
 }
+
+ion-menu.wide {
+  width: 0px;
+}
+
+ion-menu.wide::part(container) {
+  border-radius: 0;
+}
