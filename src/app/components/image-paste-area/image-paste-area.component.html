@@ -9,6 +9,12 @@
   </div>
   <br />
 </div>
-<input placeholder="Copie una imagen y péguela aquí"
+
+<input  *ngIf="!isApp" placeholder="Copie una imagen y péguela aquí"
   [id]="'story-image-copy-area-'+storyImageId"
   class="w-full flex items-center justify-center border-2 rounded-lg border-dashed border-blue-700 h-14">
+<ion-row *ngIf="isApp" class="">
+  <ion-col>
+    <ion-button (click)="addImage()" expand="block" >Agregar imagen</ion-button>
+  </ion-col>
+</ion-row>

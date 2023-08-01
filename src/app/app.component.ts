@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavigateService } from './services/navigate.service';
+import { ClipboardService } from './services/clipboard.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -22,15 +24,19 @@ export class AppComponent implements OnInit {
     { title: 'Evolución', url: 'evolution', icon: 'swap-horizontal' },
     { title: 'Glosario', url: 'glossary', icon: 'archive' }
   ]
-  constructor(protected nav: NavigateService) {
+
+  constructor(protected nav: NavigateService,
+    private clipboard: ClipboardService) {
     let width = window.screen.width
     this.wideScreen = width > 991
     console.log(width);//991
   }
 
   ngOnInit(): void {
-    
 
+    // setInterval(async ()=>{
+    //   await this.clipboard.checkClipboard()
+    // },1000)
     this.nav.navigate('home')
   }
 
