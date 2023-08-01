@@ -18,10 +18,12 @@ export class ImagePasteAreaComponent implements OnInit {
     private utils: UtilsService,
     private camera: CameraService) {
     this.storyImageId = utils.makeId(10)
-    if (this.platform.is('mobileweb')) {
+    if (this.platform.is('mobileweb') || this.platform.is('desktop')) {
       this.isApp = false;
       console.log('is not app');
     } else {
+      // console.log(
+      //  this.platform.platforms());
       console.log("is app")
 
       this.isApp = true;
